@@ -751,6 +751,258 @@ const server = http.createServer((req, res) => {
       return;
     }
 
+    // ==========================================
+    // 8.5. PROPERTIES & ROOMS MANAGEMENT (CRUD)
+    // ==========================================
+    // GET /api/properties
+    if (pathname === '/api/properties' && req.method === 'GET') {
+      let props = db.properties || [];
+      if (user.role !== 'admin' && user.propertyScope && user.propertyScope !== 'all') {
+        props = props.filter(p => p.id === user.propertyScope);
+      }
+      return sendJson(res, 200, props);
+    }
+
+    // POST /api/properties (Thêm cơ sở mới)
+    if (pathname === '/api/properties' && req.method === 'POST') {
+      if (user.role !== 'admin' && !user.permissions?.property?.add) {
+        return sendJson(res, 403, { error: 'Bạn không có quyền thêm cơ sở mới' });
+      }
+      let body = '';
+      req.on('data', chunk => body += chunk);
+      req.on('end', () => {
+        try {
+          const payload = JSON.parse(body || '{}');
+          if (!payload.name || !payload.name.trim()) {
+            return sendJson(res, 400, { error: 'Tên cơ sở không được để trống' });
+          }
+
+          const propId = `prop_${Date.now()}`;
+          const newProperty = {
+            id: propId,
+            name: payload.name.trim(),
+            type: payload.type || 'Homestay',
+            address: payload.address ? payload.address.trim() : '',
+            phone: payload.phone ? payload.phone.trim() : '',
+            checkIn: payload.checkIn || '14:00',
+            checkOut: payload.checkOut || '12:00',
+            priceFrom: Number(payload.priceFrom) || 500000,
+            occupancyRate: 0
+          };
+
+          db.properties = db.properties || [];
+          db.properties.push(newProperty);
+
+          // Khởi tạo nhanh loại phòng & phòng ban đầu (nếu người dùng nhập)
+          if (payload.initialRoomType && payload.initialRoomType.name && payload.initialRoomType.name.trim()) {
+            const rtId = `rt_${Date.now()}`;
+            const newRt = {
+              id: rtId,
+              propertyId: propId,
+              name: payload.initialRoomType.name.trim(),
+              capacity: Number(payload.initialRoomType.capacity) || 2,
+              priceWeekday: Number(payload.initialRoomType.priceWeekday) || 500000,
+              priceWeekend: Number(payload.initialRoomType.priceWeekend) || 700000,
+              description: payload.initialRoomType.description || ''
+            };
+            db.roomTypes = db.roomTypes || [];
+            db.roomTypes.push(newRt);
+
+            // Tự động tạo các phòng ban đầu
+            const roomCount = Math.min(Math.max(Number(payload.initialRoomType.roomsCount) || 1, 1), 50);
+            db.rooms = db.rooms || [];
+            for (let i = 1; i <= roomCount; i++) {
+              const roomNum = i < 10 ? `10${i}` : `${100 + i}`;
+              db.rooms.push({
+                id: `r_${propId}_${roomNum}`,
+                name: roomNum,
+                propertyId: propId,
+                roomTypeId: rtId,
+                floor: 1,
+                status: 'available',
+                cleanStatus: 'clean',
+                isMaintenance: false,
+                note: ''
+              });
+            }
+          }
+
+          saveData(db);
+          return sendJson(res, 201, {
+            success: true,
+            message: `Đã thêm cơ sở "${newProperty.name}" thành công!`,
+            property: newProperty,
+            properties: db.properties,
+            rooms: db.rooms,
+            roomTypes: db.roomTypes
+          });
+        } catch (e) {
+          return sendJson(res, 400, { error: 'Lỗi khi tạo cơ sở mới: ' + e.message });
+        }
+      });
+      return;
+    }
+
+    // PUT /api/properties/:id (Chỉnh sửa cơ sở)
+    if (pathname.startsWith('/api/properties/') && req.method === 'PUT') {
+      if (user.role !== 'admin' && !user.permissions?.property?.edit) {
+        return sendJson(res, 403, { error: 'Bạn không có quyền sửa thông tin cơ sở' });
+      }
+      const propId = pathname.replace('/api/properties/', '');
+      const prop = (db.properties || []).find(p => p.id === propId);
+      if (!prop) return sendJson(res, 404, { error: 'Không tìm thấy cơ sở' });
+
+      let body = '';
+      req.on('data', chunk => body += chunk);
+      req.on('end', () => {
+        try {
+          const payload = JSON.parse(body || '{}');
+          if (payload.name) prop.name = payload.name.trim();
+          if (payload.type) prop.type = payload.type;
+          if (payload.address !== undefined) prop.address = payload.address.trim();
+          if (payload.phone !== undefined) prop.phone = payload.phone.trim();
+          if (payload.checkIn) prop.checkIn = payload.checkIn;
+          if (payload.checkOut) prop.checkOut = payload.checkOut;
+          if (payload.priceFrom !== undefined) prop.priceFrom = Number(payload.priceFrom);
+
+          saveData(db);
+          return sendJson(res, 200, {
+            success: true,
+            message: `Đã cập nhật cơ sở "${prop.name}" thành công!`,
+            property: prop,
+            properties: db.properties
+          });
+        } catch (e) {
+          return sendJson(res, 400, { error: 'Lỗi cập nhật cơ sở: ' + e.message });
+        }
+      });
+      return;
+    }
+
+    // DELETE /api/properties/:id (Xoá cơ sở)
+    if (pathname.startsWith('/api/properties/') && req.method === 'DELETE') {
+      if (user.role !== 'admin' && !user.permissions?.property?.delete) {
+        return sendJson(res, 403, { error: 'Bạn không có quyền xoá cơ sở' });
+      }
+      const propId = pathname.replace('/api/properties/', '');
+      const propIdx = (db.properties || []).findIndex(p => p.id === propId);
+      if (propIdx === -1) return sendJson(res, 404, { error: 'Không tìm thấy cơ sở cần xoá' });
+
+      // Kiểm tra đơn đặt phòng đang hoạt động
+      const relatedBookings = (db.bookings || []).filter(b => b.propertyId === propId && !['cancelled', 'checked_out'].includes(b.status));
+      const forceDelete = urlObj.searchParams.get('force') === 'true';
+
+      if (relatedBookings.length > 0 && !forceDelete) {
+        return sendJson(res, 400, {
+          error: `Cơ sở này đang có ${relatedBookings.length} đơn đặt phòng đang hoạt động. Vui lòng xác nhận xoá ép buộc nếu vẫn muốn xoá.`,
+          hasActiveBookings: true,
+          activeBookingsCount: relatedBookings.length
+        });
+      }
+
+      const deletedProperty = db.properties.splice(propIdx, 1)[0];
+      // Xoá phòng và loại phòng thuộc cơ sở này
+      db.rooms = (db.rooms || []).filter(r => r.propertyId !== propId);
+      db.roomTypes = (db.roomTypes || []).filter(rt => rt.propertyId !== propId);
+      if (forceDelete) {
+        db.bookings = (db.bookings || []).filter(b => b.propertyId !== propId);
+      }
+
+      saveData(db);
+      return sendJson(res, 200, {
+        success: true,
+        message: `Đã xoá cơ sở "${deletedProperty.name}" và các phòng trực thuộc thành công!`,
+        properties: db.properties,
+        rooms: db.rooms,
+        roomTypes: db.roomTypes
+      });
+    }
+
+    // ROOM MANAGEMENT (Thêm / Xoá phòng trực tiếp)
+    if (pathname === '/api/rooms' && req.method === 'POST') {
+      if (user.role !== 'admin' && !user.permissions?.property?.edit) {
+        return sendJson(res, 403, { error: 'Bạn không có quyền thêm phòng' });
+      }
+      let body = '';
+      req.on('data', chunk => body += chunk);
+      req.on('end', () => {
+        try {
+          const payload = JSON.parse(body || '{}');
+          if (!payload.name || !payload.propertyId || !payload.roomTypeId) {
+            return sendJson(res, 400, { error: 'Vui lòng điền đủ Tên phòng, Cơ sở và Loại phòng' });
+          }
+
+          const newRoom = {
+            id: `r_${payload.propertyId}_${payload.name.trim()}_${Date.now().toString().slice(-4)}`,
+            name: payload.name.trim(),
+            propertyId: payload.propertyId,
+            roomTypeId: payload.roomTypeId,
+            floor: Number(payload.floor) || 1,
+            status: 'available',
+            cleanStatus: 'clean',
+            isMaintenance: !!payload.isMaintenance,
+            note: payload.note || ''
+          };
+
+          db.rooms = db.rooms || [];
+          db.rooms.push(newRoom);
+          saveData(db);
+          return sendJson(res, 201, { success: true, message: `Đã thêm phòng ${newRoom.name}!`, room: newRoom, rooms: db.rooms });
+        } catch (e) {
+          return sendJson(res, 400, { error: 'Lỗi thêm phòng: ' + e.message });
+        }
+      });
+      return;
+    }
+
+    if (pathname.startsWith('/api/rooms/') && req.method === 'DELETE') {
+      if (user.role !== 'admin' && !user.permissions?.property?.delete) {
+        return sendJson(res, 403, { error: 'Bạn không có quyền xoá phòng' });
+      }
+      const roomId = pathname.replace('/api/rooms/', '');
+      const idx = (db.rooms || []).findIndex(r => r.id === roomId);
+      if (idx === -1) return sendJson(res, 404, { error: 'Không tìm thấy phòng' });
+
+      const deletedRoom = db.rooms.splice(idx, 1)[0];
+      saveData(db);
+      return sendJson(res, 200, { success: true, message: `Đã xoá phòng ${deletedRoom.name}!`, rooms: db.rooms });
+    }
+
+    // ROOM TYPES (Thêm / Xoá loại phòng)
+    if (pathname === '/api/room-types' && req.method === 'POST') {
+      if (user.role !== 'admin' && !user.permissions?.property?.edit) {
+        return sendJson(res, 403, { error: 'Bạn không có quyền thêm loại phòng' });
+      }
+      let body = '';
+      req.on('data', chunk => body += chunk);
+      req.on('end', () => {
+        try {
+          const payload = JSON.parse(body || '{}');
+          if (!payload.name || !payload.propertyId) {
+            return sendJson(res, 400, { error: 'Vui lòng nhập tên loại phòng và cơ sở' });
+          }
+
+          const newRt = {
+            id: `rt_${Date.now()}`,
+            propertyId: payload.propertyId,
+            name: payload.name.trim(),
+            capacity: Number(payload.capacity) || 2,
+            priceWeekday: Number(payload.priceWeekday) || 500000,
+            priceWeekend: Number(payload.priceWeekend) || 700000,
+            description: payload.description || ''
+          };
+
+          db.roomTypes = db.roomTypes || [];
+          db.roomTypes.push(newRt);
+          saveData(db);
+          return sendJson(res, 201, { success: true, message: `Đã thêm loại phòng ${newRt.name}!`, roomType: newRt, roomTypes: db.roomTypes });
+        } catch (e) {
+          return sendJson(res, 400, { error: 'Lỗi thêm loại phòng: ' + e.message });
+        }
+      });
+      return;
+    }
+
     // 9. EXPORT EXCEL/CSV
     if (pathname.startsWith('/api/export/')) {
       const exportType = pathname.replace('/api/export/', '');
