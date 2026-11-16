@@ -1,0 +1,1477 @@
+{
+  "settings": {
+    "shortName": "GSHEETS HOME",
+    "slogan": "Homestay | Nghỉ Dưỡng",
+    "legalName": "GSHEETS HOME VIỆT NAM",
+    "logoUrl": "https://cdn-icons-png.flaticon.com/512/2038/2038136.png",
+    "phone": "0912345678",
+    "address": "12 Khe Sanh, Phường 10, TP. Đà Lạt & Các chi nhánh",
+    "bannerUrl": "https://images.unsplash.com/photo-1587061949409-02df41d5e562?auto=format&fit=crop&w=1600&q=80",
+    "defaultCheckInTime": "14:00",
+    "defaultCheckOutTime": "12:00",
+    "weekendNights": [
+      "fri",
+      "sat"
+    ],
+    "googleSheetsUrl": "https://script.google.com/macros/s/AKfycbxGSHEETSHOME_DEMO_SYNC/exec",
+    "autoSyncGSheets": true
+  },
+  "categories": {
+    "bookingSources": [
+      {
+        "id": "direct",
+        "name": "Điện thoại / Zalo",
+        "usageCount": 31
+      },
+      {
+        "id": "booking",
+        "name": "Booking.com",
+        "usageCount": 23
+      },
+      {
+        "id": "agoda",
+        "name": "Agoda",
+        "usageCount": 22
+      },
+      {
+        "id": "airbnb",
+        "name": "Airbnb",
+        "usageCount": 14
+      },
+      {
+        "id": "walkin",
+        "name": "Khách vãng lai",
+        "usageCount": 10
+      }
+    ],
+    "paymentMethods": [
+      {
+        "id": "cash",
+        "name": "Tiền mặt",
+        "note": "Thu trực tiếp tại quầy",
+        "usageCount": 76
+      },
+      {
+        "id": "transfer",
+        "name": "Chuyển khoản",
+        "note": "Vietcombank, MB Bank, Techcombank",
+        "usageCount": 97
+      },
+      {
+        "id": "pos",
+        "name": "Thẻ POS",
+        "note": "Quẹt thẻ Visa / Master",
+        "usageCount": 60
+      },
+      {
+        "id": "momo",
+        "name": "Ví MoMo",
+        "note": "Thanh toán QR MoMo",
+        "usageCount": 52
+      },
+      {
+        "id": "ota",
+        "name": "OTA thu hộ",
+        "note": "Agoda Collect, Booking VCC",
+        "usageCount": 277
+      }
+    ],
+    "services": [
+      {
+        "id": "srv_breakfast",
+        "name": "Ăn sáng buffet đặc sản",
+        "price": 80000,
+        "unit": "suất"
+      },
+      {
+        "id": "srv_motorbike",
+        "name": "Thuê xe máy tay ga",
+        "price": 150000,
+        "unit": "ngày"
+      },
+      {
+        "id": "srv_laundry",
+        "name": "Giặt ủi sấy lấy ngay",
+        "price": 40000,
+        "unit": "kg"
+      },
+      {
+        "id": "srv_early_in",
+        "name": "Phụ thu nhận phòng sớm",
+        "price": 200000,
+        "unit": "lần"
+      },
+      {
+        "id": "srv_late_out",
+        "name": "Phụ thu trả phòng trễ",
+        "price": 250000,
+        "unit": "lần"
+      },
+      {
+        "id": "srv_extra_bed",
+        "name": "Thêm giường phụ / nệm",
+        "price": 200000,
+        "unit": "đêm"
+      },
+      {
+        "id": "srv_bbq",
+        "name": "Set nướng BBQ sân vườn",
+        "price": 350000,
+        "unit": "set"
+      }
+    ]
+  },
+  "properties": [
+    {
+      "id": "prop_1",
+      "name": "Khách sạn Biển Xanh",
+      "type": "Khách sạn",
+      "address": "86 Trần Phú, Lộc Thọ, TP. Nha Trang",
+      "phone": "0988112233",
+      "checkIn": "14:00",
+      "checkOut": "12:00",
+      "priceFrom": 650000,
+      "occupancyRate": 20
+    },
+    {
+      "id": "prop_2",
+      "name": "Homestay Mây Đà Lạt",
+      "type": "Homestay",
+      "address": "12 Khe Sanh, Phường 10, TP. Đà Lạt",
+      "phone": "0977223344",
+      "checkIn": "14:00",
+      "checkOut": "11:00",
+      "priceFrom": 450000,
+      "occupancyRate": 57.1
+    },
+    {
+      "id": "prop_3",
+      "name": "Villa Phố Cổ Hội An",
+      "type": "Villa",
+      "address": "45 Nguyễn Duy Hiệu, Cẩm Châu, TP. Hội An",
+      "phone": "0966334455",
+      "checkIn": "14:00",
+      "checkOut": "12:00",
+      "priceFrom": 700000,
+      "occupancyRate": 33.3
+    }
+  ],
+  "roomTypes": [
+    {
+      "id": "rt_std_double",
+      "propertyId": "prop_1",
+      "name": "Standard Double",
+      "capacity": 2,
+      "priceWeekday": 650000,
+      "priceWeekend": 850000,
+      "description": "Phòng đôi tiêu chuẩn giường Queen, cửa sổ thoáng"
+    },
+    {
+      "id": "rt_deluxe_sea",
+      "propertyId": "prop_1",
+      "name": "Deluxe hướng biển",
+      "capacity": 2,
+      "priceWeekday": 950000,
+      "priceWeekend": 1250000,
+      "description": "Phòng Deluxe ban công ngắm toàn cảnh vịnh biển"
+    },
+    {
+      "id": "rt_family_suite",
+      "propertyId": "prop_1",
+      "name": "Family Suite",
+      "capacity": 4,
+      "priceWeekday": 1500000,
+      "priceWeekend": 1900000,
+      "description": "Căn hộ 2 phòng ngủ cho gia đình hoặc nhóm 4 người"
+    },
+    {
+      "id": "rt_wood_room",
+      "propertyId": "prop_2",
+      "name": "Phòng Gỗ",
+      "capacity": 2,
+      "priceWeekday": 450000,
+      "priceWeekend": 600000,
+      "description": "Phòng ốp gỗ thông ấm cúng view thung lũng sương mù"
+    },
+    {
+      "id": "rt_attic_room",
+      "propertyId": "prop_2",
+      "name": "Phòng Gác mái",
+      "capacity": 2,
+      "priceWeekday": 550000,
+      "priceWeekend": 750000,
+      "description": "Phòng áp mái lãng mạn có giếng trời ngắm sao"
+    },
+    {
+      "id": "rt_bungalow_pine",
+      "propertyId": "prop_2",
+      "name": "Bungalow Đồi thông",
+      "capacity": 3,
+      "priceWeekday": 850000,
+      "priceWeekend": 1150000,
+      "description": "Bungalow biệt lập giữa rừng thông, ban công chill"
+    },
+    {
+      "id": "rt_garden_double",
+      "propertyId": "prop_3",
+      "name": "Phòng Đôi sân vườn",
+      "capacity": 2,
+      "priceWeekday": 700000,
+      "priceWeekend": 900000,
+      "description": "Phòng hướng vườn hoa nhiệt đới xanh mát"
+    },
+    {
+      "id": "rt_villa_family",
+      "propertyId": "prop_3",
+      "name": "Phòng Gia đình",
+      "capacity": 4,
+      "priceWeekday": 1300000,
+      "priceWeekend": 1650000,
+      "description": "Phòng rộng rãi cho gia đình kèm bếp nhỏ và hồ bơi"
+    }
+  ],
+  "rooms": [
+    {
+      "id": "r_101",
+      "propertyId": "prop_1",
+      "name": "101",
+      "roomTypeId": "rt_std_double",
+      "floor": "Tầng 1",
+      "housekeepingStatus": "clean",
+      "nextGuest": "15/11",
+      "maintenanceReason": ""
+    },
+    {
+      "id": "r_102",
+      "propertyId": "prop_1",
+      "name": "102",
+      "roomTypeId": "rt_std_double",
+      "floor": "Tầng 1",
+      "housekeepingStatus": "clean",
+      "nextGuest": "15/11",
+      "maintenanceReason": ""
+    },
+    {
+      "id": "r_103",
+      "propertyId": "prop_1",
+      "name": "103",
+      "roomTypeId": "rt_std_double",
+      "floor": "Tầng 1",
+      "housekeepingStatus": "due_out",
+      "nextGuest": "Phạm Bảo Yến · đến 11/11",
+      "maintenanceReason": ""
+    },
+    {
+      "id": "r_104",
+      "propertyId": "prop_1",
+      "name": "104",
+      "roomTypeId": "rt_std_double",
+      "floor": "Tầng 1",
+      "housekeepingStatus": "maintenance",
+      "nextGuest": "",
+      "maintenanceReason": "Sửa điều hoà & chống thấm ban công"
+    },
+    {
+      "id": "r_201",
+      "propertyId": "prop_1",
+      "name": "201",
+      "roomTypeId": "rt_deluxe_sea",
+      "floor": "Tầng 2",
+      "housekeepingStatus": "due_out",
+      "nextGuest": "Lê Hải Long · đến 08/11",
+      "maintenanceReason": ""
+    },
+    {
+      "id": "r_202",
+      "propertyId": "prop_1",
+      "name": "202",
+      "roomTypeId": "rt_deluxe_sea",
+      "floor": "Tầng 2",
+      "housekeepingStatus": "due_out",
+      "nextGuest": "Hoàng Gia Tuấn · đến 10/11",
+      "maintenanceReason": ""
+    },
+    {
+      "id": "r_203",
+      "propertyId": "prop_1",
+      "name": "203",
+      "roomTypeId": "rt_deluxe_sea",
+      "floor": "Tầng 2",
+      "housekeepingStatus": "clean",
+      "nextGuest": "Khách kế: 17/11",
+      "maintenanceReason": ""
+    },
+    {
+      "id": "r_204",
+      "propertyId": "prop_1",
+      "name": "204",
+      "roomTypeId": "rt_deluxe_sea",
+      "floor": "Tầng 2",
+      "housekeepingStatus": "due_out",
+      "nextGuest": "Hoàng Gia Tuấn · đến 10/11",
+      "maintenanceReason": ""
+    },
+    {
+      "id": "r_301",
+      "propertyId": "prop_1",
+      "name": "301",
+      "roomTypeId": "rt_family_suite",
+      "floor": "Tầng 3",
+      "housekeepingStatus": "occupied",
+      "nextGuest": "Phạm Thanh Yến · đến 14/11",
+      "maintenanceReason": ""
+    },
+    {
+      "id": "r_302",
+      "propertyId": "prop_1",
+      "name": "302",
+      "roomTypeId": "rt_family_suite",
+      "floor": "Tầng 3",
+      "housekeepingStatus": "clean",
+      "nextGuest": "Khách kế: 19/11",
+      "maintenanceReason": ""
+    },
+    {
+      "id": "r_g1",
+      "propertyId": "prop_2",
+      "name": "Gỗ 1",
+      "roomTypeId": "rt_wood_room",
+      "floor": "Nhà chính",
+      "housekeepingStatus": "due_out",
+      "nextGuest": "Lê Thanh Thảo · đến 13/11",
+      "maintenanceReason": ""
+    },
+    {
+      "id": "r_g2",
+      "propertyId": "prop_2",
+      "name": "Gỗ 2",
+      "roomTypeId": "rt_wood_room",
+      "floor": "Nhà chính",
+      "housekeepingStatus": "due_out",
+      "nextGuest": "Phạm Thanh Yến · đến 12/11",
+      "maintenanceReason": ""
+    },
+    {
+      "id": "r_g3",
+      "propertyId": "prop_2",
+      "name": "Gỗ 3",
+      "roomTypeId": "rt_wood_room",
+      "floor": "Nhà chính",
+      "housekeepingStatus": "due_out",
+      "nextGuest": "Vũ Thị Hường · đến 12/11",
+      "maintenanceReason": ""
+    },
+    {
+      "id": "r_gm1",
+      "propertyId": "prop_2",
+      "name": "Gác mái 1",
+      "roomTypeId": "rt_attic_room",
+      "floor": "Nhà chính",
+      "housekeepingStatus": "due_out",
+      "nextGuest": "Ngô Văn Hà · đến 10/11",
+      "maintenanceReason": ""
+    },
+    {
+      "id": "r_gm2",
+      "propertyId": "prop_2",
+      "name": "Gác mái 2",
+      "roomTypeId": "rt_attic_room",
+      "floor": "Nhà chính",
+      "housekeepingStatus": "due_out",
+      "nextGuest": "Hồ Hải Quân · đến 13/11",
+      "maintenanceReason": ""
+    },
+    {
+      "id": "r_bga",
+      "propertyId": "prop_2",
+      "name": "Bungalow A",
+      "roomTypeId": "rt_bungalow_pine",
+      "floor": "Khu vườn",
+      "housekeepingStatus": "occupied",
+      "nextGuest": "Vũ Thanh Sơn · đến 13/11",
+      "maintenanceReason": ""
+    },
+    {
+      "id": "r_bgb",
+      "propertyId": "prop_2",
+      "name": "Bungalow B",
+      "roomTypeId": "rt_bungalow_pine",
+      "floor": "Khu vườn",
+      "housekeepingStatus": "due_out",
+      "nextGuest": "Trần Minh Hà · đến 10/11",
+      "maintenanceReason": ""
+    },
+    {
+      "id": "r_v1",
+      "propertyId": "prop_3",
+      "name": "V1",
+      "roomTypeId": "rt_garden_double",
+      "floor": "Sân vườn",
+      "housekeepingStatus": "clean",
+      "nextGuest": "Khách kế: 14/11",
+      "maintenanceReason": ""
+    },
+    {
+      "id": "r_v2",
+      "propertyId": "prop_3",
+      "name": "V2",
+      "roomTypeId": "rt_garden_double",
+      "floor": "Sân vườn",
+      "housekeepingStatus": "arriving",
+      "nextGuest": "Bùi Gia Long · Giữ chỗ",
+      "maintenanceReason": ""
+    },
+    {
+      "id": "r_v3",
+      "propertyId": "prop_3",
+      "name": "V3",
+      "roomTypeId": "rt_garden_double",
+      "floor": "Sân vườn",
+      "housekeepingStatus": "occupied",
+      "nextGuest": "Phạm Quốc Quân · đến 18/11",
+      "maintenanceReason": ""
+    },
+    {
+      "id": "r_v4",
+      "propertyId": "prop_3",
+      "name": "V4",
+      "roomTypeId": "rt_garden_double",
+      "floor": "Sân vườn",
+      "housekeepingStatus": "clean",
+      "nextGuest": "Khách kế: 18/11",
+      "maintenanceReason": ""
+    },
+    {
+      "id": "r_f1",
+      "propertyId": "prop_3",
+      "name": "F1",
+      "roomTypeId": "rt_villa_family",
+      "floor": "Lầu 1",
+      "housekeepingStatus": "clean",
+      "nextGuest": "Khách kế: 14/11",
+      "maintenanceReason": ""
+    },
+    {
+      "id": "r_f2",
+      "propertyId": "prop_3",
+      "name": "F2",
+      "roomTypeId": "rt_villa_family",
+      "floor": "Lầu 1",
+      "housekeepingStatus": "due_out",
+      "nextGuest": "Vũ Gia Sơn · đến 10/11",
+      "maintenanceReason": ""
+    }
+  ],
+  "customers": [
+    {
+      "id": "c_1",
+      "name": "Lê Hải Long",
+      "email": "long.le@gmail.com",
+      "phone": "0987654321",
+      "idCard": "079090123456",
+      "nationality": "Việt Nam",
+      "tier": "vip",
+      "stayCount": 18,
+      "nightsCount": 58,
+      "totalSpend": 65280000,
+      "lastStay": "08/12/2026"
+    },
+    {
+      "id": "c_2",
+      "name": "Ngô Thị Sơn",
+      "email": "khach14@email.com",
+      "phone": "0912345671",
+      "idCard": "038088234567",
+      "nationality": "Việt Nam",
+      "tier": "regular",
+      "stayCount": 15,
+      "nightsCount": 37,
+      "totalSpend": 35675000,
+      "lastStay": "12/12/2026"
+    },
+    {
+      "id": "c_3",
+      "name": "Emily Brown",
+      "email": "khach32@email.com",
+      "phone": "0923456782",
+      "idCard": "Hộ chiếu A982341",
+      "nationality": "Úc",
+      "tier": "regular",
+      "stayCount": 13,
+      "nightsCount": 34,
+      "totalSpend": 29527000,
+      "lastStay": "09/12/2026"
+    },
+    {
+      "id": "c_4",
+      "name": "Tanaka Yui",
+      "email": "yui.tanaka@tokyo.jp",
+      "phone": "0934567893",
+      "idCard": "Hộ chiếu TZ78129",
+      "nationality": "Nhật Bản",
+      "tier": "regular",
+      "stayCount": 11,
+      "nightsCount": 29,
+      "totalSpend": 28295000,
+      "lastStay": "09/12/2026"
+    },
+    {
+      "id": "c_5",
+      "name": "Lê Văn Mai",
+      "email": "mai.le@vnpt.vn",
+      "phone": "0945678904",
+      "idCard": "042095345678",
+      "nationality": "Việt Nam",
+      "tier": "regular",
+      "stayCount": 10,
+      "nightsCount": 31,
+      "totalSpend": 31177000,
+      "lastStay": "09/12/2026"
+    },
+    {
+      "id": "c_6",
+      "name": "Đỗ Ngọc Khánh",
+      "email": "khanh.do@vietcom.com",
+      "phone": "0956789015",
+      "idCard": "001091456789",
+      "nationality": "Việt Nam",
+      "tier": "loyal",
+      "stayCount": 15,
+      "nightsCount": 32,
+      "totalSpend": 28450000,
+      "lastStay": "07/12/2026"
+    },
+    {
+      "id": "c_7",
+      "name": "Phạm Thu Nam",
+      "email": "nam.pham@vin.com",
+      "phone": "0967890126",
+      "idCard": "052089567890",
+      "nationality": "Việt Nam",
+      "tier": "regular",
+      "stayCount": 11,
+      "nightsCount": 22,
+      "totalSpend": 26890000,
+      "lastStay": "06/12/2026"
+    },
+    {
+      "id": "c_8",
+      "name": "Đặng Thu Hường",
+      "email": "huong.dang@vtv.vn",
+      "phone": "0978901237",
+      "idCard": "025093678901",
+      "nationality": "Việt Nam",
+      "tier": "regular",
+      "stayCount": 11,
+      "nightsCount": 22,
+      "totalSpend": 20320000,
+      "lastStay": "06/12/2026"
+    },
+    {
+      "id": "c_9",
+      "name": "Bùi Gia Long",
+      "email": "gialong@saigon.vn",
+      "phone": "0989012348",
+      "idCard": "079094789012",
+      "nationality": "Việt Nam",
+      "tier": "regular",
+      "stayCount": 9,
+      "nightsCount": 25,
+      "totalSpend": 22615000,
+      "lastStay": "08/12/2026"
+    },
+    {
+      "id": "c_10",
+      "name": "Trần Minh Hà",
+      "email": "ha.tran@fpt.com",
+      "phone": "0990123459",
+      "idCard": "031088890123",
+      "nationality": "Việt Nam",
+      "tier": "regular",
+      "stayCount": 9,
+      "nightsCount": 19,
+      "totalSpend": 19330000,
+      "lastStay": "08/12/2026"
+    },
+    {
+      "id": "c_11",
+      "name": "Ngô Văn Hà",
+      "email": "ha.ngo@dalat.vn",
+      "phone": "0911223344",
+      "idCard": "068092901234",
+      "nationality": "Việt Nam",
+      "tier": "loyal",
+      "stayCount": 8,
+      "nightsCount": 21,
+      "totalSpend": 18500000,
+      "lastStay": "10/11/2026"
+    },
+    {
+      "id": "c_12",
+      "name": "Nguyễn Hải Trang",
+      "email": "trang.hai@hanoi.vn",
+      "phone": "0922334455",
+      "idCard": "001096012345",
+      "nationality": "Việt Nam",
+      "tier": "loyal",
+      "stayCount": 7,
+      "nightsCount": 18,
+      "totalSpend": 16400000,
+      "lastStay": "10/11/2026"
+    },
+    {
+      "id": "c_13",
+      "name": "Trần Gia Phúc",
+      "email": "phuc.tran@hue.vn",
+      "phone": "0933445566",
+      "idCard": "046093123456",
+      "nationality": "Việt Nam",
+      "tier": "regular",
+      "stayCount": 5,
+      "nightsCount": 14,
+      "totalSpend": 12800000,
+      "lastStay": "09/11/2026"
+    },
+    {
+      "id": "c_14",
+      "name": "Phạm Thanh Yến",
+      "email": "yen.pham@gmail.com",
+      "phone": "0944556677",
+      "idCard": "079097234567",
+      "nationality": "Việt Nam",
+      "tier": "loyal",
+      "stayCount": 12,
+      "nightsCount": 28,
+      "totalSpend": 34900000,
+      "lastStay": "14/11/2026"
+    },
+    {
+      "id": "c_15",
+      "name": "Hồ Quốc Hà",
+      "email": "ha.ho@vng.com",
+      "phone": "0955667788",
+      "idCard": "079089345678",
+      "nationality": "Việt Nam",
+      "tier": "regular",
+      "stayCount": 6,
+      "nightsCount": 16,
+      "totalSpend": 17200000,
+      "lastStay": "20/11/2026"
+    }
+  ],
+  "bookings": [
+    {
+      "id": "BK2611-074",
+      "groupId": null,
+      "groupName": "",
+      "customerId": "c_15",
+      "customerName": "Hồ Quốc Hà",
+      "customerPhone": "0955667788",
+      "propertyId": "prop_1",
+      "roomId": "r_201",
+      "roomName": "201",
+      "roomTypeName": "Deluxe hướng biển",
+      "checkInDate": "2026-11-15",
+      "checkOutDate": "2026-11-20",
+      "nights": 5,
+      "guestsCount": 1,
+      "status": "hold",
+      "source": "booking",
+      "sourceName": "Booking.com",
+      "nightlyRates": [
+        {
+          "date": "2026-11-15",
+          "dayName": "CN",
+          "isWeekend": false,
+          "rate": 950000
+        },
+        {
+          "date": "2026-11-16",
+          "dayName": "T2",
+          "isWeekend": false,
+          "rate": 950000
+        },
+        {
+          "date": "2026-11-17",
+          "dayName": "T3",
+          "isWeekend": false,
+          "rate": 950000
+        },
+        {
+          "date": "2026-11-18",
+          "dayName": "T4",
+          "isWeekend": false,
+          "rate": 950000
+        },
+        {
+          "date": "2026-11-19",
+          "dayName": "T5",
+          "isWeekend": false,
+          "rate": 950000
+        }
+      ],
+      "roomTotal": 4750000,
+      "services": [],
+      "servicesTotal": 0,
+      "grandTotal": 4750000,
+      "deposit": 0,
+      "paid": 0,
+      "balance": 4750000,
+      "notes": "Khách giữ chỗ qua Booking, hẹn thanh toán khi nhận phòng",
+      "createdAt": "2026-11-10T14:20:00Z"
+    },
+    {
+      "id": "BK2611-085",
+      "groupId": null,
+      "groupName": "",
+      "customerId": "c_2",
+      "customerName": "Ngô Thị Sơn",
+      "customerPhone": "0912345671",
+      "propertyId": "prop_1",
+      "roomId": "r_204",
+      "roomName": "204",
+      "roomTypeName": "Deluxe hướng biển",
+      "checkInDate": "2026-11-12",
+      "checkOutDate": "2026-11-16",
+      "nights": 4,
+      "guestsCount": 2,
+      "status": "confirmed",
+      "source": "agoda",
+      "sourceName": "Agoda",
+      "nightlyRates": [
+        {
+          "date": "2026-11-12",
+          "dayName": "T5",
+          "isWeekend": false,
+          "rate": 950000
+        },
+        {
+          "date": "2026-11-13",
+          "dayName": "T6",
+          "isWeekend": true,
+          "rate": 1250000
+        },
+        {
+          "date": "2026-11-14",
+          "dayName": "T7",
+          "isWeekend": true,
+          "rate": 1250000
+        },
+        {
+          "date": "2026-11-15",
+          "dayName": "CN",
+          "isWeekend": false,
+          "rate": 950000
+        }
+      ],
+      "roomTotal": 4400000,
+      "services": [
+        {
+          "serviceId": "srv_breakfast",
+          "name": "Ăn sáng buffet đặc sản",
+          "price": 80000,
+          "qty": 4,
+          "total": 320000
+        }
+      ],
+      "servicesTotal": 320000,
+      "grandTotal": 4720000,
+      "deposit": 2150000,
+      "paid": 2150000,
+      "balance": 2570000,
+      "notes": "Đã thu cọc qua OTA",
+      "createdAt": "2026-11-09T08:30:00Z"
+    },
+    {
+      "id": "BK2611-035",
+      "groupId": null,
+      "groupName": "",
+      "customerId": "c_1",
+      "customerName": "Lê Hải Long",
+      "customerPhone": "0987654321",
+      "propertyId": "prop_1",
+      "roomId": "r_201",
+      "roomName": "201",
+      "roomTypeName": "Deluxe hướng biển",
+      "checkInDate": "2026-11-05",
+      "checkOutDate": "2026-11-08",
+      "nights": 3,
+      "guestsCount": 2,
+      "status": "checked_out",
+      "source": "direct",
+      "sourceName": "Điện thoại / Zalo",
+      "nightlyRates": [
+        {
+          "date": "2026-11-05",
+          "dayName": "T5",
+          "isWeekend": false,
+          "rate": 950000
+        },
+        {
+          "date": "2026-11-06",
+          "dayName": "T6",
+          "isWeekend": true,
+          "rate": 1250000
+        },
+        {
+          "date": "2026-11-07",
+          "dayName": "T7",
+          "isWeekend": true,
+          "rate": 1250000
+        }
+      ],
+      "roomTotal": 3450000,
+      "services": [
+        {
+          "serviceId": "srv_motorbike",
+          "name": "Thuê xe máy tay ga",
+          "price": 150000,
+          "qty": 3,
+          "total": 450000
+        }
+      ],
+      "servicesTotal": 450000,
+      "grandTotal": 3900000,
+      "deposit": 1500000,
+      "paid": 2500000,
+      "balance": 1400000,
+      "notes": "Khách VIP quen - nợ 1.400.000đ dịch vụ chuyển khoản sau",
+      "createdAt": "2026-11-02T09:15:00Z"
+    },
+    {
+      "id": "BK2611-032",
+      "groupId": null,
+      "groupName": "",
+      "customerId": "c_6",
+      "customerName": "Đỗ Ngọc Khánh",
+      "customerPhone": "0956789015",
+      "propertyId": "prop_1",
+      "roomId": "r_101",
+      "roomName": "101",
+      "roomTypeName": "Standard Double",
+      "checkInDate": "2026-11-12",
+      "checkOutDate": "2026-11-14",
+      "nights": 2,
+      "guestsCount": 2,
+      "status": "confirmed",
+      "source": "direct",
+      "sourceName": "Điện thoại / Zalo",
+      "nightlyRates": [
+        {
+          "date": "2026-11-12",
+          "dayName": "T5",
+          "isWeekend": false,
+          "rate": 650000
+        },
+        {
+          "date": "2026-11-13",
+          "dayName": "T6",
+          "isWeekend": true,
+          "rate": 850000
+        }
+      ],
+      "roomTotal": 1500000,
+      "services": [],
+      "servicesTotal": 0,
+      "grandTotal": 1500000,
+      "deposit": 1000000,
+      "paid": 1000000,
+      "balance": 500000,
+      "notes": "Khách đặt trước 2 đêm",
+      "createdAt": "2026-11-09T09:42:00Z"
+    },
+    {
+      "id": "BK2611-054",
+      "groupId": "GRP-DALAT-01",
+      "groupName": "Đoàn cty Tân Phát",
+      "customerId": "c_11",
+      "customerName": "Ngô Văn Hà",
+      "customerPhone": "0911223344",
+      "propertyId": "prop_2",
+      "roomId": "r_bga",
+      "roomName": "Bungalow A",
+      "roomTypeName": "Bungalow Đồi thông",
+      "checkInDate": "2026-11-13",
+      "checkOutDate": "2026-11-16",
+      "nights": 3,
+      "guestsCount": 3,
+      "status": "in_house",
+      "source": "direct",
+      "sourceName": "Điện thoại / Zalo",
+      "nightlyRates": [
+        {
+          "date": "2026-11-13",
+          "dayName": "T6",
+          "isWeekend": true,
+          "rate": 1150000
+        },
+        {
+          "date": "2026-11-14",
+          "dayName": "T7",
+          "isWeekend": true,
+          "rate": 1150000
+        },
+        {
+          "date": "2026-11-15",
+          "dayName": "CN",
+          "isWeekend": false,
+          "rate": 850000
+        }
+      ],
+      "roomTotal": 3150000,
+      "services": [
+        {
+          "serviceId": "srv_bbq",
+          "name": "Set nướng BBQ sân vườn",
+          "price": 350000,
+          "qty": 1,
+          "total": 350000
+        }
+      ],
+      "servicesTotal": 350000,
+      "grandTotal": 3500000,
+      "deposit": 2000000,
+      "paid": 2000000,
+      "balance": 1500000,
+      "notes": "Đoàn cty Tân Phát - Phòng 1",
+      "createdAt": "2026-11-12T10:00:00Z"
+    },
+    {
+      "id": "BK2611-055",
+      "groupId": "GRP-DALAT-01",
+      "groupName": "Đoàn cty Tân Phát",
+      "customerId": "c_12",
+      "customerName": "Nguyễn Hải Trang",
+      "customerPhone": "0922334455",
+      "propertyId": "prop_2",
+      "roomId": "r_gm2",
+      "roomName": "Gác mái 2",
+      "roomTypeName": "Phòng Gác mái",
+      "checkInDate": "2026-11-13",
+      "checkOutDate": "2026-11-16",
+      "nights": 3,
+      "guestsCount": 2,
+      "status": "confirmed",
+      "source": "direct",
+      "sourceName": "Điện thoại / Zalo",
+      "nightlyRates": [
+        {
+          "date": "2026-11-13",
+          "dayName": "T6",
+          "isWeekend": true,
+          "rate": 750000
+        },
+        {
+          "date": "2026-11-14",
+          "dayName": "T7",
+          "isWeekend": true,
+          "rate": 750000
+        },
+        {
+          "date": "2026-11-15",
+          "dayName": "CN",
+          "isWeekend": false,
+          "rate": 550000
+        }
+      ],
+      "roomTotal": 2050000,
+      "services": [],
+      "servicesTotal": 0,
+      "grandTotal": 2050000,
+      "deposit": 1000000,
+      "paid": 1000000,
+      "balance": 1050000,
+      "notes": "Đoàn cty Tân Phát - Phòng 2",
+      "createdAt": "2026-11-12T10:05:00Z"
+    },
+    {
+      "id": "BK2611-056",
+      "groupId": null,
+      "groupName": "",
+      "customerId": "c_13",
+      "customerName": "Trần Gia Phúc",
+      "customerPhone": "0933445566",
+      "propertyId": "prop_2",
+      "roomId": "r_g3",
+      "roomName": "Gỗ 3",
+      "roomTypeName": "Phòng Gỗ",
+      "checkInDate": "2026-11-13",
+      "checkOutDate": "2026-11-15",
+      "nights": 2,
+      "guestsCount": 2,
+      "status": "confirmed",
+      "source": "airbnb",
+      "sourceName": "Airbnb",
+      "nightlyRates": [
+        {
+          "date": "2026-11-13",
+          "dayName": "T6",
+          "isWeekend": true,
+          "rate": 600000
+        },
+        {
+          "date": "2026-11-14",
+          "dayName": "T7",
+          "isWeekend": true,
+          "rate": 600000
+        }
+      ],
+      "roomTotal": 1200000,
+      "services": [],
+      "servicesTotal": 0,
+      "grandTotal": 1200000,
+      "deposit": 1200000,
+      "paid": 1200000,
+      "balance": 0,
+      "notes": "Airbnb thanh toán trọn gói",
+      "createdAt": "2026-11-10T11:20:00Z"
+    },
+    {
+      "id": "BK2611-057",
+      "groupId": null,
+      "groupName": "",
+      "customerId": "c_9",
+      "customerName": "Bùi Gia Long",
+      "customerPhone": "0989012348",
+      "propertyId": "prop_3",
+      "roomId": "r_v2",
+      "roomName": "V2",
+      "roomTypeName": "Phòng Đôi sân vườn",
+      "checkInDate": "2026-11-13",
+      "checkOutDate": "2026-11-16",
+      "nights": 3,
+      "guestsCount": 2,
+      "status": "hold",
+      "source": "direct",
+      "sourceName": "Điện thoại / Zalo",
+      "nightlyRates": [
+        {
+          "date": "2026-11-13",
+          "dayName": "T6",
+          "isWeekend": true,
+          "rate": 900000
+        },
+        {
+          "date": "2026-11-14",
+          "dayName": "T7",
+          "isWeekend": true,
+          "rate": 900000
+        },
+        {
+          "date": "2026-11-15",
+          "dayName": "CN",
+          "isWeekend": false,
+          "rate": 700000
+        }
+      ],
+      "roomTotal": 2500000,
+      "services": [],
+      "servicesTotal": 0,
+      "grandTotal": 2500000,
+      "deposit": 500000,
+      "paid": 500000,
+      "balance": 2000000,
+      "notes": "Khách giữ chỗ đến tối nay check-in",
+      "createdAt": "2026-11-11T16:45:00Z"
+    },
+    {
+      "id": "BK2611-030",
+      "groupId": null,
+      "groupName": "",
+      "customerId": "c_14",
+      "customerName": "Phạm Thanh Yến",
+      "customerPhone": "0944556677",
+      "propertyId": "prop_1",
+      "roomId": "r_301",
+      "roomName": "301",
+      "roomTypeName": "Family Suite",
+      "checkInDate": "2026-11-11",
+      "checkOutDate": "2026-11-14",
+      "nights": 3,
+      "guestsCount": 4,
+      "status": "in_house",
+      "source": "booking",
+      "sourceName": "Booking.com",
+      "nightlyRates": [
+        {
+          "date": "2026-11-11",
+          "dayName": "T4",
+          "isWeekend": false,
+          "rate": 1500000
+        },
+        {
+          "date": "2026-11-12",
+          "dayName": "T5",
+          "isWeekend": false,
+          "rate": 1500000
+        },
+        {
+          "date": "2026-11-13",
+          "dayName": "T6",
+          "isWeekend": true,
+          "rate": 1900000
+        }
+      ],
+      "roomTotal": 4900000,
+      "services": [
+        {
+          "serviceId": "srv_breakfast",
+          "name": "Ăn sáng buffet đặc sản",
+          "price": 80000,
+          "qty": 8,
+          "total": 640000
+        }
+      ],
+      "servicesTotal": 640000,
+      "grandTotal": 5540000,
+      "deposit": 3000000,
+      "paid": 5540000,
+      "balance": 0,
+      "notes": "Đã thanh toán đủ khi nhận phòng",
+      "createdAt": "2026-11-08T15:10:00Z"
+    }
+  ],
+  "payments": [
+    {
+      "id": "PAY-001",
+      "date": "2026-11-12",
+      "bookingId": "BK2611-017",
+      "customerName": "Lê Quốc Yến",
+      "roomProperty": "102 · Khách sạn Biển Xanh",
+      "type": "payment",
+      "typeName": "Thanh toán",
+      "method": "cash",
+      "methodName": "Tiền mặt",
+      "amount": 1770000,
+      "recipient": "Quản trị viên",
+      "notes": "Thanh toán tiền phòng khi trả phòng"
+    },
+    {
+      "id": "PAY-002",
+      "date": "2026-11-12",
+      "bookingId": "BK2611-152",
+      "customerName": "Phạm Gia Bảo",
+      "roomProperty": "Gác mái 1 · Homestay Mây Đà Lạt",
+      "type": "deposit",
+      "typeName": "Đặt cọc",
+      "method": "transfer",
+      "methodName": "Chuyển khoản",
+      "amount": 1000000,
+      "recipient": "Quản trị viên",
+      "notes": "Đặt cọc chuyển khoản Vietcombank"
+    },
+    {
+      "id": "PAY-003",
+      "date": "2026-11-09",
+      "bookingId": "BK2611-029",
+      "customerName": "Đặng Ngọc Sơn",
+      "roomProperty": "203 · Khách sạn Biển Xanh",
+      "type": "payment",
+      "typeName": "Thanh toán",
+      "method": "pos",
+      "methodName": "Thẻ POS",
+      "amount": 2830000,
+      "recipient": "Quản trị viên",
+      "notes": "Thanh toán khi trả phòng qua quẹt thẻ"
+    },
+    {
+      "id": "PAY-004",
+      "date": "2026-11-09",
+      "bookingId": "BK2611-037",
+      "customerName": "Hồ Quốc Hà",
+      "roomProperty": "V2 · Villa Phố Cổ Hội An",
+      "type": "payment",
+      "typeName": "Thanh toán",
+      "method": "cash",
+      "methodName": "Tiền mặt",
+      "amount": 1550000,
+      "recipient": "Quản trị viên",
+      "notes": "Thanh toán khi trả phòng"
+    },
+    {
+      "id": "PAY-005",
+      "date": "2026-11-09",
+      "bookingId": "BK2611-059",
+      "customerName": "Lê Quốc Yến",
+      "roomProperty": "V4 · Villa Phố Cổ Hội An",
+      "type": "deposit",
+      "typeName": "Đặt cọc",
+      "method": "transfer",
+      "methodName": "Chuyển khoản",
+      "amount": 190000,
+      "recipient": "Quản trị viên",
+      "notes": "Đặt cọc"
+    },
+    {
+      "id": "PAY-006",
+      "date": "2026-11-09",
+      "bookingId": "BK2611-069",
+      "customerName": "Kim Min-jun",
+      "roomProperty": "V1 · Villa Phố Cổ Hội An",
+      "type": "deposit",
+      "typeName": "Đặt cọc",
+      "method": "pos",
+      "methodName": "Thẻ POS",
+      "amount": 1130000,
+      "recipient": "Quản trị viên",
+      "notes": "Đặt cọc"
+    },
+    {
+      "id": "PAY-007",
+      "date": "2026-11-09",
+      "bookingId": "BK2611-085",
+      "customerName": "Ngô Thị Sơn",
+      "roomProperty": "204 · Khách sạn Biển Xanh",
+      "type": "deposit",
+      "typeName": "Đặt cọc",
+      "method": "ota",
+      "methodName": "OTA thu hộ",
+      "amount": 4300000,
+      "recipient": "Quản trị viên",
+      "notes": "OTA thanh toán trước"
+    },
+    {
+      "id": "PAY-008",
+      "date": "2026-11-09",
+      "bookingId": "BK2611-085",
+      "customerName": "Ngô Thị Sơn",
+      "roomProperty": "204 · Khách sạn Biển Xanh",
+      "type": "refund",
+      "typeName": "Hoàn tiền",
+      "method": "ota",
+      "methodName": "OTA thu hộ",
+      "amount": -2150000,
+      "recipient": "Quản trị viên",
+      "notes": "Hoàn 50% cọc khi đổi ngày"
+    },
+    {
+      "id": "PAY-009",
+      "date": "2026-11-09",
+      "bookingId": "BK2611-099",
+      "customerName": "Vũ Thị Hường",
+      "roomProperty": "301 · Khách sạn Biển Xanh",
+      "type": "deposit",
+      "typeName": "Đặt cọc",
+      "method": "ota",
+      "methodName": "OTA thu hộ",
+      "amount": 1900000,
+      "recipient": "Quản trị viên",
+      "notes": "OTA thanh toán trước"
+    },
+    {
+      "id": "PAY-010",
+      "date": "2026-11-09",
+      "bookingId": "BK2611-107",
+      "customerName": "Vũ Thị Hường",
+      "roomProperty": "Gỗ 3 · Homestay Mây Đà Lạt",
+      "type": "deposit",
+      "typeName": "Đặt cọc",
+      "method": "ota",
+      "methodName": "OTA thu hộ",
+      "amount": 450000,
+      "recipient": "Quản trị viên",
+      "notes": "OTA thanh toán trước"
+    },
+    {
+      "id": "PAY-011",
+      "date": "2026-11-09",
+      "bookingId": "BK2611-110",
+      "customerName": "Emily Brown",
+      "roomProperty": "101 · Khách sạn Biển Xanh",
+      "type": "deposit",
+      "typeName": "Đặt cọc",
+      "method": "ota",
+      "methodName": "OTA thu hộ",
+      "amount": 1300000,
+      "recipient": "Quản trị viên",
+      "notes": "OTA thanh toán trước"
+    },
+    {
+      "id": "PAY-012",
+      "date": "2026-11-09",
+      "bookingId": "BK2611-113",
+      "customerName": "Lucas Martin",
+      "roomProperty": "Gác mái 2 · Homestay Mây Đà Lạt",
+      "type": "deposit",
+      "typeName": "Đặt cọc",
+      "method": "ota",
+      "methodName": "OTA thu hộ",
+      "amount": 1100000,
+      "recipient": "Quản trị viên",
+      "notes": "OTA thanh toán trước"
+    }
+  ],
+  "users": [
+    {
+      "id": "u_admin",
+      "name": "Quản trị viên",
+      "username": "admin",
+      "password": "123",
+      "role": "admin",
+      "roleLabel": "Quản trị viên",
+      "propertyScope": "all",
+      "propertyScopeLabel": "Tất cả",
+      "phone": "0912345678",
+      "status": "active",
+      "permissionsSummary": "Toàn quyền",
+      "permissions": {
+        "booking": {
+          "view": true,
+          "add": true,
+          "edit": true,
+          "delete": true
+        },
+        "payment": {
+          "view": true,
+          "add": true,
+          "edit": true,
+          "delete": true
+        },
+        "housekeeping": {
+          "view": true,
+          "add": true,
+          "edit": true,
+          "delete": true
+        },
+        "customer": {
+          "view": true,
+          "add": true,
+          "edit": true,
+          "delete": true
+        },
+        "reports": {
+          "view": true,
+          "add": true,
+          "edit": true,
+          "delete": true
+        },
+        "property": {
+          "view": true,
+          "add": true,
+          "edit": true,
+          "delete": true
+        },
+        "settings": {
+          "view": true,
+          "add": true,
+          "edit": true,
+          "delete": true
+        }
+      }
+    },
+    {
+      "id": "u_letan",
+      "name": "Nguyễn Thị Lan",
+      "username": "letan",
+      "password": "123",
+      "role": "user",
+      "roleLabel": "Lễ tân",
+      "propertyScope": "prop_2",
+      "propertyScopeLabel": "Homestay Mây Đà Lạt",
+      "phone": "0988776655",
+      "status": "active",
+      "permissionsSummary": "Đặt (VAE), Thu (VA), Buồng (VE), Khách (VAE), Cơ (V)",
+      "permissions": {
+        "booking": {
+          "view": true,
+          "add": true,
+          "edit": true,
+          "delete": false
+        },
+        "payment": {
+          "view": true,
+          "add": true,
+          "edit": false,
+          "delete": false
+        },
+        "housekeeping": {
+          "view": true,
+          "add": false,
+          "edit": true,
+          "delete": false
+        },
+        "customer": {
+          "view": true,
+          "add": true,
+          "edit": true,
+          "delete": false
+        },
+        "reports": {
+          "view": false,
+          "add": false,
+          "edit": false,
+          "delete": false
+        },
+        "property": {
+          "view": true,
+          "add": false,
+          "edit": false,
+          "delete": false
+        },
+        "settings": {
+          "view": false,
+          "add": false,
+          "edit": false,
+          "delete": false
+        }
+      }
+    },
+    {
+      "id": "u_ketoan",
+      "name": "Trần Minh Khoa",
+      "username": "ketoan",
+      "password": "123",
+      "role": "user",
+      "roleLabel": "Kế toán",
+      "propertyScope": "all",
+      "propertyScopeLabel": "Tất cả",
+      "phone": "0977665544",
+      "status": "active",
+      "permissionsSummary": "Đặt (V), Thu (VAED), Khách (V), Cơ (V), Báo (V)",
+      "permissions": {
+        "booking": {
+          "view": true,
+          "add": false,
+          "edit": false,
+          "delete": false
+        },
+        "payment": {
+          "view": true,
+          "add": true,
+          "edit": true,
+          "delete": true
+        },
+        "housekeeping": {
+          "view": false,
+          "add": false,
+          "edit": false,
+          "delete": false
+        },
+        "customer": {
+          "view": true,
+          "add": false,
+          "edit": false,
+          "delete": false
+        },
+        "reports": {
+          "view": true,
+          "add": false,
+          "edit": false,
+          "delete": false
+        },
+        "property": {
+          "view": true,
+          "add": false,
+          "edit": false,
+          "delete": false
+        },
+        "settings": {
+          "view": false,
+          "add": false,
+          "edit": false,
+          "delete": false
+        }
+      }
+    }
+  ]
+}

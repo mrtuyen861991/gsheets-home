@@ -1,0 +1,44 @@
+{
+  "todos": [
+    {
+      "id": "1",
+      "title": "Khởi tạo máy chủ Node.js trên cổng 4000",
+      "completed": true,
+      "createdAt": "2026-11-16T03:11:22.675Z"
+    },
+    {
+      "id": "2",
+      "title": "Xây dựng giao diện React với Tailwind CSS",
+      "completed": true,
+      "createdAt": "2026-11-16T03:11:22.679Z"
+    },
+    {
+      "id": "3",
+      "title": "Kết nối REST API giữa React và Node.js",
+      "completed": true,
+      "createdAt": "2026-11-16T03:11:22.679Z"
+    },
+    {
+      "id": "4",
+      "title": "Thử nghiệm tính năng Todo & Ghi chú tương tác",
+      "completed": false,
+      "createdAt": "2026-11-16T03:11:22.679Z"
+    }
+  ],
+  "notes": [
+    {
+      "id": "1",
+      "title": "Chào mừng bạn!",
+      "content": "Đây là ứng dụng web full-stack đơn giản kết hợp Node.js backend và React frontend trên cổng 4000.",
+      "color": "blue",
+      "createdAt": "2026-11-16T03:11:22.679Z"
+    },
+    {
+      "id": "2",
+      "title": "Mẹo sử dụng",
+      "content": "Bạn có thể thêm bớt công việc, ghi chú và kiểm tra API trực tiếp qua tab API Explorer.",
+      "color": "emerald",
+      "createdAt": "2026-11-16T03:11:22.679Z"
+    }
+  ]
+}
