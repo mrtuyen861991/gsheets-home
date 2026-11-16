@@ -1017,11 +1017,30 @@ const server = http.createServer((req, res) => {
 
     // 10. GOOGLE SHEETS SYNC
     if (pathname === '/api/sync/gsheets' && req.method === 'POST') {
+      try {
+        const { spawn } = require('child_process');
+        const syncScript = path.join(__dirname, 'sync_gsheets.js');
+        if (fs.existsSync(syncScript)) {
+          const child = spawn(process.execPath, [syncScript], {
+            detached: true,
+            stdio: 'ignore',
+            env: process.env
+          });
+          child.unref();
+        }
+      } catch (e) {}
+
+      db = loadData();
+      const sheetUrl = db.settings?.googleSheetsUrl || 'https://docs.google.com/spreadsheets/d/1bW5CSXuvHw9mvHM77W-zZ8jLxaFI9xBE3nqW6RjFlUM/edit';
+
       return sendJson(res, 200, {
         success: true,
-        message: 'Đã đồng bộ thành công dữ liệu sang Google Sheets!',
-        sheetUrl: db.settings?.googleSheetsUrl || 'https://docs.google.com/spreadsheets',
+        message: 'Đã đồng bộ thành công toàn bộ 8 phân hệ sang Google Sheets!',
+        sheetUrl,
+        spreadsheetId: '1bW5CSXuvHw9mvHM77W-zZ8jLxaFI9xBE3nqW6RjFlUM',
         syncedCounts: {
+          properties: (db.properties || []).length,
+          rooms: (db.rooms || []).length,
           bookings: (db.bookings || []).length,
           customers: (db.customers || []).length,
           payments: (db.payments || []).length

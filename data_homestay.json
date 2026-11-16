@@ -13,8 +13,10 @@
       "fri",
       "sat"
     ],
-    "googleSheetsUrl": "https://script.google.com/macros/s/AKfycbxGSHEETSHOME_DEMO_SYNC/exec",
-    "autoSyncGSheets": true
+    "googleSheetsUrl": "https://docs.google.com/spreadsheets/d/1bW5CSXuvHw9mvHM77W-zZ8jLxaFI9xBE3nqW6RjFlUM/edit",
+    "autoSyncGSheets": true,
+    "spreadsheetId": "1bW5CSXuvHw9mvHM77W-zZ8jLxaFI9xBE3nqW6RjFlUM",
+    "lastSyncGSheets": "2026-11-16T08:05:17.999Z"
   },
   "categories": {
     "bookingSources": [
