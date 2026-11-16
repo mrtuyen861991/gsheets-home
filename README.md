@@ -1,47 +1,24 @@
-# Ứng Dụng Web Node.js / React / HTML (Port 4000)
+# 🏡 GSHEETS HOME (v1.0) - Quản Lý Homestay, Khách Sạn & Nghỉ Dưỡng
 
-Ứng dụng web đơn giản kết hợp giữa **Node.js (Backend REST API)** và **React 18 + HTML5 + Tailwind CSS (Frontend SPA)** chạy trên cổng `4000`.
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/mrtuyen861991/gsheets-home)
 
-## 🚀 Cách khởi chạy
+Hệ thống quản lý đặt phòng, buồng phòng, khách hàng và doanh thu chuyên nghiệp dành cho Homestay, Villa và Khách sạn.
 
-Từ thư mục hiện tại:
-```bash
-# Sử dụng runtime Node.js có sẵn trong workspace
-export PATH="$PWD/.node/bin:$PATH"
-cd simple-react-app
-node server.js
-```
-
-Hoặc chạy nhanh từ thư mục gốc:
-```bash
-export PATH="$PWD/.node/bin:$PATH"
-node simple-react-app/server.js
-```
-
-Truy cập trình duyệt tại:
-👉 **[http://localhost:4000](http://localhost:4000)**
+## 🌟 Tính năng chính
+- **Quản lý đa cơ sở & Bảng giá:** Tự động tính giá ngày thường và giá cuối tuần theo từng đêm.
+- **Lịch phòng Timeline trực quan:** Kéo chọn ngày để đặt phòng nhanh, nhận/trả phòng 1 chạm.
+- **Đặt đoàn (Group booking):** Hỗ trợ đặt nhiều phòng và thu tiền gộp qua đơn đại diện.
+- **Buồng phòng 6 màu trạng thái:** Nhận diện phòng sạch, dọn tất cả phòng trong 1 click.
+- **Sổ quỹ thu tiền:** Quản lý đặt cọc, thanh toán, hoàn tiền qua Tiền mặt, Chuyển khoản, POS, MoMo, OTA.
+- **Hồ sơ khách hàng:** Phân hạng Thường, Thân thiết, VIP.
+- **Báo cáo kinh doanh:** Doanh thu, Công suất, ADR, RevPAR, biểu đồ công suất theo thứ trong tuần.
+- **Phân quyền ma trận:** Giới hạn lễ tân chỉ thấy cơ sở được phân công.
+- **Tối ưu di động (Mobile First):** Thanh điều hướng dưới cùng thuận tiện thao tác trên điện thoại.
+- **Đồng bộ Google Sheets & Xuất Excel:** Xuất file chuẩn tiếng Việt không lỗi font.
 
 ---
 
-## 🌟 Tính năng nổi bật
+## 🚀 Triển khai lên Render.com
+Bấm vào nút bên dưới để tự động triển khai:
 
-1. **Giao diện hiện đại React 18 & Tailwind CSS:**
-   - Hỗ trợ chế độ Sáng / Tối (Light / Dark Mode).
-   - Thiết kế giao diện phản hồi nhanh (Responsive), tương thích máy tính và di động.
-   - Hiển thị trạng thái kết nối trực tiếp với server (Live status indicator).
-
-2. **Các phân hệ tương tác:**
-   - **📊 Tổng quan & Thống kê:** Hiển thị thời gian chạy (Uptime), phiên bản Node.js, trạng thái bộ nhớ Heap / RSS và widget đếm tương tác React Hook.
-   - **✅ Quản lý Công việc (Todo):** Thêm, đánh dấu hoàn thành, xóa và lọc trạng thái — đồng bộ tức thì với REST API và lưu vào file `data.json`.
-   - **📝 Ghi chú nhanh (Notes):** Tạo ghi chú với mã màu tùy chọn.
-   - **⚡ Trình kiểm thử API (API Explorer):** Gửi request trực tiếp đến các endpoint của Node.js và xem kết quả JSON kèm thời gian phản hồi (latency).
-
-3. **REST API Endpoints:**
-   - `GET /api/status`: Thông tin tình trạng máy chủ và cấu hình hệ thống.
-   - `GET /api/todos`: Danh sách công việc.
-   - `POST /api/todos`: Tạo công việc mới.
-   - `PATCH /api/todos/:id`: Cập nhật trạng thái công việc.
-   - `DELETE /api/todos/:id`: Xóa công việc.
-   - `GET /api/notes`: Danh sách ghi chú.
-   - `POST /api/notes`: Tạo ghi chú mới.
-   - `DELETE /api/notes/:id`: Xóa ghi chú.
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/mrtuyen861991/gsheets-home)
