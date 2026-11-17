@@ -10,6 +10,15 @@ if (!fs.existsSync(TMP_DIR)) {
   fs.mkdirSync(TMP_DIR, { recursive: true });
 }
 
+function isGSheetsAvailable() {
+  try {
+    execSync('which gsheets', { stdio: 'ignore' });
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 function runGSheets(cmd) {
   try {
     return execSync(`gsheets ${cmd}`, { encoding: 'utf8' });
@@ -43,6 +52,11 @@ function toCsvString(rows) {
 async function syncAll() {
   console.log('🚀 Bắt đầu đồng bộ hệ thống GSHEETS HOME sang Google Sheets...');
   console.log(`📊 Spreadsheet ID: ${SPREADSHEET_ID}`);
+
+  if (!isGSheetsAvailable()) {
+    console.log('ℹ️ GSheets CLI chưa được cài đặt trong môi trường này (Render container). Bỏ qua đồng bộ CLI, dữ liệu an toàn trong database.');
+    return;
+  }
 
   const rawData = fs.readFileSync(DATA_FILE, 'utf8');
   const db = JSON.parse(rawData);

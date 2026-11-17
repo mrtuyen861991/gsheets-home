@@ -1,9 +1,9 @@
 services:
   - type: web
     name: gsheets-home
-    env: node
+    runtime: node
     plan: free
-    region: singapore
+    region: oregon
     buildCommand: npm install
     startCommand: node server.js
     autoDeploy: true

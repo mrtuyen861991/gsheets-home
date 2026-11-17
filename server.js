@@ -155,6 +155,12 @@ const server = http.createServer((req, res) => {
   const urlObj = new URL(req.url, `http://${req.headers.host || 'localhost:4000'}`);
   const pathname = urlObj.pathname;
 
+  // 0. HEALTH CHECK (For Render, uptime monitors, health checks)
+  if (pathname === '/healthz' || pathname === '/ping') {
+    res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+    return res.end('OK');
+  }
+
   // 1. PUBLIC AUTH API: LOGIN
   if (pathname === '/api/auth/login' && req.method === 'POST') {
     let body = '';
