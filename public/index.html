@@ -5,23 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>GSHEETS HOME - Quản lý Homestay & Nghỉ Dưỡng</title>
   <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2038/2038136.png" />
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Tailwind CSS: Local vendor first, then fallback to CDN -->
+  <script src="/vendor/tailwindcss.js"></script>
   <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            teal: {
-              700: '#005853',
-              800: '#004440',
-              900: '#00312e',
+    if (!window.tailwind) {
+      document.write('<script src="https://cdn.tailwindcss.com"><\/script>');
+    }
+  </script>
+  <script>
+    if (window.tailwind) {
+      window.tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              teal: {
+                700: '#005853',
+                800: '#004440',
+                900: '#00312e',
+              }
             }
           }
         }
-      }
+      };
     }
   </script>
+
   <!-- Google Fonts: Inter & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,11 +61,39 @@
     <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
   </div>
 
-  <!-- React 18 Production UMD -->
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <!-- React 18 & ReactDOM: Local vendor first, then fallback to CDN -->
+  <script src="/vendor/react.production.min.js"></script>
+  <script>
+    if (!window.React) {
+      document.write('<script src="https://unpkg.com/react@18/umd/react.production.min.js"><\/script>');
+    }
+  </script>
+  <script src="/vendor/react-dom.production.min.js"></script>
+  <script>
+    if (!window.ReactDOM) {
+      document.write('<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"><\/script>');
+    }
+  </script>
 
-  <!-- Pre-compiled Fast App Bundle (<30ms instant load, zero Babel overhead) -->
-  <script src="/app.bundle.js"></script>
+  <!-- Pre-compiled Fast App Bundle -->
+  <script src="/app.bundle.js?v=2.2"></script>
+
+  <!-- Safety Fallback: In case of cache issues or network drop, provide 1-click reload button -->
+  <script>
+    window.addEventListener('error', function(e) {
+      console.error("Global captured error:", e);
+      var root = document.getElementById('root');
+      if (root && (!root.children.length || root.innerHTML.indexOf('Đang tải ứng dụng') !== -1)) {
+        root.innerHTML = '<div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #f8fafc; font-family: sans-serif; padding: 20px;">' +
+          '<div style="max-width: 450px; background: white; border: 1px solid #e2e8f0; border-radius: 24px; padding: 32px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: center;">' +
+            '<div style="font-size: 36px; margin-bottom: 12px;">🏡</div>' +
+            '<h3 style="font-weight: 800; color: #0f172a; margin: 0 0 8px; font-size: 18px;">GSHEETS HOME</h3>' +
+            '<p style="color: #64748b; font-size: 13px; line-height: 1.5; margin: 0 0 20px;">Hệ thống vừa cập nhật phiên bản mới. Bấm nút dưới đây để làm mới bộ nhớ đệm và tiếp tục sử dụng.</p>' +
+            '<button onclick="localStorage.removeItem(\'gsheets_home_token\'); localStorage.removeItem(\'gsheets_home_user\'); location.reload(true);" style="background: #005853; color: white; border: none; padding: 12px 24px; font-weight: bold; border-radius: 12px; cursor: pointer; font-size: 13px; box-shadow: 0 4px 12px rgba(0,88,83,0.25);">🔄 Làm mới & Tiếp tục</button>' +
+          '</div>' +
+        '</div>';
+      }
+    });
+  </script>
 </body>
 </html>

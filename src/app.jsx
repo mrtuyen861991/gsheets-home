@@ -6097,6 +6097,65 @@ const { useState, useEffect, useMemo, useRef } = React;
       );
     }
 
+    // Error Boundary: Prevents React White Screen of Death
+    class ErrorBoundary extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = { hasError: false, error: null };
+      }
+      static getDerivedStateFromError(error) {
+        return { hasError: true, error };
+      }
+      componentDidCatch(error, errorInfo) {
+        console.error("ErrorBoundary caught error:", error, errorInfo);
+      }
+      render() {
+        if (this.state.hasError) {
+          return (
+            <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4 font-sans">
+              <div className="max-w-md w-full bg-white rounded-3xl p-8 border border-slate-200 shadow-xl text-center space-y-4">
+                <div className="w-16 h-16 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center mx-auto text-3xl font-bold">
+                  ⚠️
+                </div>
+                <h2 className="text-xl font-extrabold text-slate-900">Đã xảy ra sự cố hiển thị</h2>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Trình duyệt đang lưu bộ nhớ đệm cũ hoặc mất kết nối mạng. Bấm nút bên dưới để khôi phục ngay:
+                </p>
+                <div className="space-y-2 pt-2">
+                  <button
+                    onClick={() => {
+                      localStorage.removeItem('gsheets_home_token');
+                      localStorage.removeItem('gsheets_home_user');
+                      window.location.reload();
+                    }}
+                    className="w-full py-3 rounded-xl bg-teal-700 hover:bg-teal-800 text-white font-bold text-xs shadow-md transition"
+                  >
+                    🔄 Đăng nhập lại & Làm mới
+                  </button>
+                  <button
+                    onClick={() => this.setState({ hasError: false })}
+                    className="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition"
+                  >
+                    Thử tải lại dữ liệu
+                  </button>
+                </div>
+                {this.state.error && (
+                  <pre className="text-[10px] text-rose-500 bg-rose-50/50 p-2.5 rounded-xl overflow-x-auto text-left font-mono mt-2">
+                    {this.state.error.message || String(this.state.error)}
+                  </pre>
+                )}
+              </div>
+            </div>
+          );
+        }
+        return this.props.children;
+      }
+    }
+
     // Render React App
     const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
+    root.render(
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
+    );

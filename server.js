@@ -1242,3 +1242,14 @@ server.listen(PORT, '0.0.0.0', () => {
   console.log(`📍 Webapp: http://localhost:${PORT}`);
   console.log(`======================================================\n`);
 });
+
+// Also bind port 3000 if different and available (ensures http://localhost:3000 and http://localhost:4000 both work)
+if (Number(PORT) !== 3000) {
+  const altServer = http.createServer((req, res) => server.emit('request', req, res));
+  altServer.on('error', () => {
+    // Port 3000 is occupied or not allowed, safely ignore
+  });
+  altServer.listen(3000, '0.0.0.0', () => {
+    console.log(`📍 Đồng thời hỗ trợ: http://localhost:3000`);
+  });
+}
