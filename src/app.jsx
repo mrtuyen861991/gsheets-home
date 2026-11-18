@@ -35,6 +35,7 @@ const { useState, useEffect, useMemo, useRef } = React;
       const [globalSearch, setGlobalSearch] = useState('');
       const [toast, setToast] = useState(null);
       const [userMenuOpen, setUserMenuOpen] = useState(false);
+      const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
       const [syncingGSheets, setSyncingGSheets] = useState(false);
 
       // Modals
@@ -392,29 +393,39 @@ const { useState, useEffect, useMemo, useRef } = React;
           {/* MAIN WRAPPER */}
           <div className="flex-1 flex flex-col min-w-0 pb-16 lg:pb-0">
             {/* TOP HEADER */}
-            <header className="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <h2 className="font-bold text-base sm:text-lg text-slate-900 capitalize flex items-center gap-2">
-                  <span className="lg:hidden text-lg">🏡</span>
-                  {currentScreen === 'dashboard' && 'Tổng quan hôm nay'}
-                  {currentScreen === 'calendar' && 'Lịch phòng'}
-                  {currentScreen === 'bookings' && 'Quản lý Đặt phòng'}
-                  {currentScreen === 'housekeeping' && 'Buồng phòng'}
-                  {currentScreen === 'payments' && 'Sổ quỹ Thu tiền'}
-                  {currentScreen === 'customers' && 'Hồ sơ Khách hàng'}
-                  {currentScreen === 'reports' && 'Báo cáo doanh thu'}
-                  {currentScreen === 'properties' && 'Cơ sở & Loại phòng'}
-                  {currentScreen === 'users' && 'Người dùng & Phân quyền'}
-                  {currentScreen === 'settings' && 'Cài đặt hệ thống'}
-                  {currentScreen === 'guide' && 'Hướng dẫn sử dụng'}
+            <header className="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-3 sm:px-6 h-16 flex items-center justify-between gap-2 sm:gap-4">
+              <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                <button
+                  type="button"
+                  onClick={() => setMobileDrawerOpen(true)}
+                  className="lg:hidden w-9 h-9 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-100 flex items-center justify-center text-lg active:scale-95 transition shrink-0"
+                  title="Mở menu điều hướng"
+                >
+                  ☰
+                </button>
+                <h2 className="font-bold text-sm sm:text-base md:text-lg text-slate-900 capitalize truncate flex items-center gap-1.5">
+                  <span className="lg:hidden text-base">🏡</span>
+                  <span className="truncate">
+                    {currentScreen === 'dashboard' && 'Tổng quan hôm nay'}
+                    {currentScreen === 'calendar' && 'Lịch phòng'}
+                    {currentScreen === 'bookings' && 'Quản lý Đặt phòng'}
+                    {currentScreen === 'housekeeping' && 'Buồng phòng'}
+                    {currentScreen === 'payments' && 'Sổ quỹ Thu tiền'}
+                    {currentScreen === 'customers' && 'Hồ sơ Khách hàng'}
+                    {currentScreen === 'reports' && 'Báo cáo doanh thu'}
+                    {currentScreen === 'properties' && 'Cơ sở & Loại phòng'}
+                    {currentScreen === 'users' && 'Người dùng & Phân quyền'}
+                    {currentScreen === 'settings' && 'Cài đặt hệ thống'}
+                    {currentScreen === 'guide' && 'Hướng dẫn sử dụng'}
+                  </span>
                 </h2>
               </div>
 
               {/* Right controls */}
-              <div className="flex items-center gap-2 sm:gap-4">
+              <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
                 {/* Global Search Input */}
-                <div className="relative hidden md:block w-64 lg:w-72">
-                  <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 text-sm">
+                <div className="relative hidden md:block w-48 lg:w-72">
+                  <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 text-xs">
                     🔍
                   </span>
                   <input
@@ -422,7 +433,7 @@ const { useState, useEffect, useMemo, useRef } = React;
                     value={globalSearch}
                     onChange={(e) => setGlobalSearch(e.target.value)}
                     placeholder="Tìm đơn, khách, phòng... (Ctrl+K)"
-                    className="w-full pl-9 pr-4 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200/80 focus:bg-white text-xs border border-transparent focus:border-teal-500 focus:outline-none transition"
+                    className="w-full pl-8 pr-4 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200/80 focus:bg-white text-xs border border-transparent focus:border-teal-500 focus:outline-none transition"
                   />
                   {globalSearch && (
                     <button
@@ -440,7 +451,7 @@ const { useState, useEffect, useMemo, useRef } = React;
                     href="https://docs.google.com/spreadsheets/d/1bW5CSXuvHw9mvHM77W-zZ8jLxaFI9xBE3nqW6RjFlUM/edit"
                     target="_blank"
                     rel="noreferrer"
-                    className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-200 transition"
+                    className="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-200 transition"
                     title="Mở Google Sheets trực tiếp trên Google Drive"
                   >
                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -451,11 +462,12 @@ const { useState, useEffect, useMemo, useRef } = React;
                   <button
                     onClick={handleSyncGoogleSheets}
                     disabled={syncingGSheets}
-                    className="p-2 sm:px-3 sm:py-1.5 rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-800 text-xs font-bold border border-teal-200/90 flex items-center gap-1.5 transition active:scale-95 disabled:opacity-50"
+                    className="px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-200/90 flex items-center gap-1.5 transition active:scale-95 disabled:opacity-50"
                     title="Nhấn để tự động đồng bộ 8 phân hệ sang Google Sheets"
                   >
-                    <span className={syncingGSheets ? 'animate-spin inline-block' : ''}>🔄</span>
+                    <span className={`text-sm ${syncingGSheets ? 'animate-spin inline-block' : ''}`}>🔄</span>
                     <span className="hidden sm:inline">{syncingGSheets ? 'Đang đồng bộ...' : 'Đồng bộ Sheets'}</span>
+                    <span className="sm:hidden text-[11px] font-bold">Sheets</span>
                   </button>
                 </div>
 
@@ -681,25 +693,185 @@ const { useState, useEffect, useMemo, useRef } = React;
             </main>
           </div>
 
+          {/* MOBILE SLIDING DRAWER (Full navigation for smartphones) */}
+          {mobileDrawerOpen && (
+            <div className="lg:hidden fixed inset-0 z-50 flex">
+              {/* Backdrop */}
+              <div
+                className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"
+                onClick={() => setMobileDrawerOpen(false)}
+              ></div>
+
+              {/* Drawer Container */}
+              <div className="relative w-80 max-w-[85vw] bg-white h-full shadow-2xl flex flex-col z-10">
+                {/* Header */}
+                <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-teal-700 to-emerald-500 text-white flex items-center justify-center text-xl shadow-md">
+                      🏡
+                    </div>
+                    <div>
+                      <h3 className="font-extrabold text-sm text-slate-900">GSHEETS HOME</h3>
+                      <p className="text-[10px] text-teal-700 font-semibold">{currentUser?.name} ({currentUser?.roleLabel})</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setMobileDrawerOpen(false)}
+                    className="w-8 h-8 rounded-xl hover:bg-slate-100 text-slate-400 flex items-center justify-center font-bold text-sm"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                {/* Scoped Property Notice if applicable */}
+                {currentUser?.propertyScope && currentUser?.propertyScope !== 'all' && (
+                  <div className="mx-3 mt-3 p-2.5 bg-amber-50 rounded-xl border border-amber-200 text-[11px] text-amber-800 font-medium">
+                    📍 Bạn đang phụ trách cơ sở: <b>{currentUser?.propertyScopeLabel}</b>
+                  </div>
+                )}
+
+                {/* Navigation Links */}
+                <div className="flex-1 overflow-y-auto p-3 space-y-4 text-xs font-semibold">
+                  <div>
+                    <div className="px-3 mb-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">VẬN HÀNH</div>
+                    <div className="space-y-0.5">
+                      {[
+                        { id: 'dashboard', label: 'Tổng quan hôm nay', icon: '🟢', show: true },
+                        { id: 'calendar', label: 'Lịch phòng (Timeline)', icon: '📅', show: hasPermission('booking') },
+                        { id: 'bookings', label: 'Quản lý Đặt phòng', icon: '📝', show: hasPermission('booking') },
+                        { id: 'housekeeping', label: 'Buồng phòng & Vệ sinh', icon: '🧹', show: hasPermission('housekeeping') },
+                        { id: 'payments', label: 'Sổ quỹ Thu tiền', icon: '💵', show: hasPermission('payment') }
+                      ].filter(i => i.show).map(item => (
+                        <button
+                          key={item.id}
+                          onClick={() => { setCurrentScreen(item.id); setMobileDrawerOpen(false); }}
+                          className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition ${
+                            currentScreen === item.id ? 'bg-teal-50 text-teal-800 font-bold border border-teal-100' : 'text-slate-600 hover:bg-slate-50'
+                          }`}
+                        >
+                          <span className="flex items-center gap-2.5">
+                            <span>{item.icon}</span>
+                            <span>{item.label}</span>
+                          </span>
+                          {currentScreen === item.id && <span className="w-1.5 h-1.5 rounded-full bg-teal-600"></span>}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="px-3 mb-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">KHÁCH & SỐ LIỆU</div>
+                    <div className="space-y-0.5">
+                      {[
+                        { id: 'customers', label: 'Hồ sơ Khách hàng', icon: '👥', show: hasPermission('customer') },
+                        { id: 'reports', label: 'Báo cáo doanh thu & KPIs', icon: '📊', show: hasPermission('reports') }
+                      ].filter(i => i.show).map(item => (
+                        <button
+                          key={item.id}
+                          onClick={() => { setCurrentScreen(item.id); setMobileDrawerOpen(false); }}
+                          className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition ${
+                            currentScreen === item.id ? 'bg-teal-50 text-teal-800 font-bold border border-teal-100' : 'text-slate-600 hover:bg-slate-50'
+                          }`}
+                        >
+                          <span className="flex items-center gap-2.5">
+                            <span>{item.icon}</span>
+                            <span>{item.label}</span>
+                          </span>
+                          {currentScreen === item.id && <span className="w-1.5 h-1.5 rounded-full bg-teal-600"></span>}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="px-3 mb-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">HỆ THỐNG</div>
+                    <div className="space-y-0.5">
+                      {[
+                        { id: 'properties', label: 'Cơ sở & Loại phòng', icon: '🏨', show: hasPermission('property') },
+                        { id: 'users', label: 'Người dùng & Phân quyền', icon: '👤', show: currentUser?.role === 'admin' },
+                        { id: 'settings', label: 'Cài đặt hệ thống', icon: '⚙️', show: currentUser?.role === 'admin' },
+                        { id: 'guide', label: 'Hướng dẫn sử dụng', icon: '❓', show: true }
+                      ].filter(i => i.show).map(item => (
+                        <button
+                          key={item.id}
+                          onClick={() => { setCurrentScreen(item.id); setMobileDrawerOpen(false); }}
+                          className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition ${
+                            currentScreen === item.id ? 'bg-teal-50 text-teal-800 font-bold border border-teal-100' : 'text-slate-600 hover:bg-slate-50'
+                          }`}
+                        >
+                          <span className="flex items-center gap-2.5">
+                            <span>{item.icon}</span>
+                            <span>{item.label}</span>
+                          </span>
+                          {currentScreen === item.id && <span className="w-1.5 h-1.5 rounded-full bg-teal-600"></span>}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Google Sheets Link on Mobile */}
+                  <div className="pt-2 border-t border-slate-100 space-y-2">
+                    <a
+                      href="https://docs.google.com/spreadsheets/d/1bW5CSXuvHw9mvHM77W-zZ8jLxaFI9xBE3nqW6RjFlUM/edit"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-emerald-50 text-emerald-800 font-bold hover:bg-emerald-100 transition border border-emerald-200/80"
+                    >
+                      <span className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span>Mở Google Sheets Live</span>
+                      </span>
+                      <span>↗</span>
+                    </a>
+
+                    <button
+                      onClick={() => { handleSyncGoogleSheets(); setMobileDrawerOpen(false); }}
+                      className="w-full flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl bg-teal-700 text-white font-bold hover:bg-teal-800 shadow-md transition"
+                    >
+                      <span>🔄</span>
+                      <span>Đồng bộ Google Sheets</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Drawer Footer */}
+                <div className="p-3 border-t border-slate-100 flex items-center justify-between bg-slate-50">
+                  <button
+                    onClick={() => { setMobileDrawerOpen(false); setShowChangePasswordModal(true); }}
+                    className="text-xs text-slate-600 hover:text-slate-900 font-bold flex items-center gap-1.5 px-2 py-1.5 rounded-lg"
+                  >
+                    <span>🔑</span> Đổi mật khẩu
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    className="text-xs text-rose-600 hover:text-rose-700 font-bold flex items-center gap-1.5 px-2 py-1.5 rounded-lg"
+                  >
+                    <span>🚪</span> Đăng xuất
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* MOBILE BOTTOM NAVIGATION BAR */}
           <nav className="lg:hidden fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-40 px-2 py-1.5 flex items-center justify-around shadow-lg">
             {[
               { id: 'dashboard', label: 'Tổng quan', icon: '🟢' },
-              { id: 'calendar', label: 'Lịch', icon: '📅' },
-              { id: 'bookings', label: 'Đặt phòng', icon: '➕' },
+              { id: 'calendar', label: 'Lịch phòng', icon: '📅' },
+              { id: 'bookings', label: 'Đặt phòng', icon: '📝' },
               { id: 'housekeeping', label: 'Buồng', icon: '🧹' },
-              { id: 'more_menu', label: 'Tài khoản', icon: '👤' }
+              { id: 'mobile_drawer', label: 'Danh mục', icon: '☰' }
             ].map(tab => (
               <button
                 key={tab.id}
                 onClick={() => {
-                  if (tab.id === 'more_menu') {
-                    setUserMenuOpen(true);
+                  if (tab.id === 'mobile_drawer') {
+                    setMobileDrawerOpen(true);
                   } else {
                     setCurrentScreen(tab.id);
                   }
                 }}
-                className={`flex flex-col items-center justify-center py-1 px-2 rounded-xl transition ${
+                className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-xl transition ${
                   currentScreen === tab.id
                     ? 'text-teal-700 font-extrabold scale-105'
                     : 'text-slate-500 font-medium'
@@ -4433,6 +4605,89 @@ const { useState, useEffect, useMemo, useRef } = React;
                 </span>
               </div>
             </div>
+
+            {/* Full-width Card 3: Đồng bộ Google Sheets 8 Phân Hệ */}
+            <div className="lg:col-span-2 bg-gradient-to-br from-emerald-900 to-teal-950 text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
+              <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-white/10">
+                <div>
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold mb-3 border border-emerald-500/30">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>Đang kết nối trực tiếp với Google Sheets</span>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-black tracking-tight">
+                    Tích hợp & Đồng bộ Google Sheets
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl leading-relaxed">
+                    Hệ thống tự động kích hoạt tiến trình đồng bộ nền sang Google Sheets mỗi khi có phát sinh hoặc thay đổi đơn đặt phòng, phòng, dịch vụ hoặc thanh toán.
+                  </p>
+                  <div className="mt-3 flex items-center gap-2 text-xs text-emerald-200">
+                    <span>🕒 Đồng bộ lần cuối:</span>
+                    <span className="font-bold text-white bg-white/10 px-2 py-0.5 rounded">
+                      {data?.settings?.lastSyncGSheets ? new Date(data.settings.lastSyncGSheets).toLocaleString('vi-VN') : 'Vừa xong'}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-3">
+                  <a
+                    href="https://docs.google.com/spreadsheets/d/1bW5CSXuvHw9mvHM77W-zZ8jLxaFI9xBE3nqW6RjFlUM/edit"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-4 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-teal-900 font-extrabold text-xs shadow-md transition flex items-center gap-2"
+                  >
+                    <span>📊 Mở file Sheets</span>
+                    <span>↗</span>
+                  </a>
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      showToast('🔄 Đang tiến hành đồng bộ sang Google Sheets...');
+                      try {
+                        const res = await authFetch('/api/sync/gsheets', { method: 'POST' });
+                        const json = await res.json();
+                        showToast('✅ ' + json.message);
+                        onRefresh();
+                      } catch (e) {
+                        showToast('Lỗi đồng bộ: ' + e.message, 'error');
+                      }
+                    }}
+                    className="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-extrabold text-xs shadow-md transition flex items-center gap-2 active:scale-95"
+                  >
+                    <span>⚡ Đồng bộ ngay bây giờ</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* 8 Synchronized Tabs Grid */}
+              <div className="relative z-10 pt-6">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-300 mb-3">
+                  Danh sách 8 phân hệ đang được đồng bộ tự động:
+                </h4>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                  {[
+                    { title: '1. Tổng quan', desc: 'KPIs, doanh thu, công suất', icon: '🟢' },
+                    { title: '2. Đặt phòng', desc: 'Danh sách đơn, phòng, khách', icon: '📝' },
+                    { title: '3. Thu tiền', desc: 'Phiếu thu, cọc, chuyển khoản', icon: '💵' },
+                    { title: '4. Cơ sở & Phòng', desc: 'Các chi nhánh homestay & phòng', icon: '🏨' },
+                    { title: '5. Bảng giá', desc: 'Giá ngày thường & cuối tuần', icon: '🏷️' },
+                    { title: '6. Khách hàng', desc: 'Hồ sơ khách & hạng VIP', icon: '👥' },
+                    { title: '7. Buồng phòng', desc: 'Trạng thái sạch/bẩn buồng phòng', icon: '🧹' },
+                    { title: '8. Cấu hình', desc: 'Thông tin đơn vị & check-in/out', icon: '⚙️' }
+                  ].map((sh, idx) => (
+                    <div key={idx} className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/10 flex items-start gap-2.5">
+                      <span className="text-base">{sh.icon}</span>
+                      <div>
+                        <div className="font-bold text-white flex items-center gap-1.5">
+                          <span>{sh.title}</span>
+                          <span className="text-[10px] text-emerald-400">✓</span>
+                        </div>
+                        <div className="text-[11px] text-slate-300 mt-0.5 leading-snug">{sh.desc}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </form>
       );
@@ -4467,9 +4722,27 @@ const { useState, useEffect, useMemo, useRef } = React;
             <p className="text-xs text-slate-400 mt-1">Các thao tác chính của phần mềm quản lý đặt phòng khách sạn & homestay</p>
           </div>
 
+          {/* Mobile Horizontal Navigation Tabs */}
+          <div className="lg:hidden flex gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+            {menuItems.map(item => (
+              <button
+                key={item.id}
+                onClick={() => setActiveSection(item.id)}
+                className={`px-3 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap shrink-0 flex items-center gap-1.5 ${
+                  activeSection === item.id
+                    ? 'bg-teal-700 text-white shadow-sm'
+                    : 'bg-white text-slate-600 border border-slate-200'
+                }`}
+              >
+                <span>{item.icon}</span>
+                <span>{item.label}</span>
+              </button>
+            ))}
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
-            {/* Left Sub-Navigation Menu (Image 1) */}
-            <div className="bg-white rounded-3xl p-4 border border-slate-200/80 shadow-sm space-y-2 sticky top-6">
+            {/* Left Sub-Navigation Menu (Desktop) */}
+            <div className="hidden lg:block bg-white rounded-3xl p-4 border border-slate-200/80 shadow-sm space-y-2 sticky top-6">
               <span className="text-[10px] font-extrabold uppercase text-slate-400 px-3 tracking-wider">Nội dung</span>
               <nav className="space-y-1">
                 {menuItems.map(item => (

@@ -21,9 +21,34 @@ function loadData() {
   return { sessions: {} };
 }
 
-function saveData(data) {
+let gsheetsSyncTimer = null;
+function triggerDebouncedGSheetsSync() {
+  if (gsheetsSyncTimer) clearTimeout(gsheetsSyncTimer);
+  gsheetsSyncTimer = setTimeout(() => {
+    try {
+      const { spawn } = require('child_process');
+      const syncScript = path.join(__dirname, 'sync_gsheets.js');
+      if (fs.existsSync(syncScript)) {
+        console.log('🔄 [AutoSync] Tự động đồng bộ toàn bộ 8 phân hệ sang Google Sheets...');
+        const child = spawn(process.execPath, [syncScript], {
+          detached: true,
+          stdio: 'ignore',
+          env: process.env
+        });
+        child.unref();
+      }
+    } catch (e) {
+      console.warn('AutoSync warning:', e.message);
+    }
+  }, 1500);
+}
+
+function saveData(data, autoSync = true) {
   try {
     fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), 'utf8');
+    if (autoSync) {
+      triggerDebouncedGSheetsSync();
+    }
   } catch (err) {
     console.error('Lỗi khi ghi data_homestay.json:', err);
   }
@@ -185,7 +210,7 @@ const server = http.createServer((req, res) => {
           createdAt: new Date().toISOString(),
           expiresAt: Date.now() + 14 * 24 * 60 * 60 * 1000 // 14 days
         };
-        saveData(db);
+        saveData(db, false);
 
         const safeUser = { ...user };
         delete safeUser.password;
@@ -203,7 +228,7 @@ const server = http.createServer((req, res) => {
     const token = authHeader.replace('Bearer ', '').trim();
     if (token && db.sessions && db.sessions[token]) {
       delete db.sessions[token];
-      saveData(db);
+      saveData(db, false);
     }
     return sendJson(res, 200, { success: true, message: 'Đã đăng xuất thành công' });
   }

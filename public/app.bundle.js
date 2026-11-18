@@ -1,7 +1,7 @@
 /**
  * GSHEETS HOME - Quản lý Homestay & Nghỉ Dưỡng
  * Pre-compiled Client Bundle (Babel Classic Runtime)
- * Generated at: 2026-11-18T05:29:48.327Z
+ * Generated at: 2026-11-18T05:48:58.640Z
  * Load time: < 30ms (zero in-browser Babel overhead)
  */
 const {
@@ -53,6 +53,7 @@ function App() {
   const [globalSearch, setGlobalSearch] = useState('');
   const [toast, setToast] = useState(null);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [syncingGSheets, setSyncingGSheets] = useState(false);
 
   // Modals
@@ -407,25 +408,32 @@ function App() {
   }, "🔒 An toàn"))), /*#__PURE__*/React.createElement("div", {
     className: "flex-1 flex flex-col min-w-0 pb-16 lg:pb-0"
   }, /*#__PURE__*/React.createElement("header", {
-    className: "sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-6 h-16 flex items-center justify-between gap-4"
+    className: "sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-3 sm:px-6 h-16 flex items-center justify-between gap-2 sm:gap-4"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center gap-3"
-  }, /*#__PURE__*/React.createElement("h2", {
-    className: "font-bold text-base sm:text-lg text-slate-900 capitalize flex items-center gap-2"
+    className: "flex items-center gap-2 sm:gap-3 min-w-0"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: () => setMobileDrawerOpen(true),
+    className: "lg:hidden w-9 h-9 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-100 flex items-center justify-center text-lg active:scale-95 transition shrink-0",
+    title: "Mở menu điều hướng"
+  }, "☰"), /*#__PURE__*/React.createElement("h2", {
+    className: "font-bold text-sm sm:text-base md:text-lg text-slate-900 capitalize truncate flex items-center gap-1.5"
   }, /*#__PURE__*/React.createElement("span", {
-    className: "lg:hidden text-lg"
-  }, "🏡"), currentScreen === 'dashboard' && 'Tổng quan hôm nay', currentScreen === 'calendar' && 'Lịch phòng', currentScreen === 'bookings' && 'Quản lý Đặt phòng', currentScreen === 'housekeeping' && 'Buồng phòng', currentScreen === 'payments' && 'Sổ quỹ Thu tiền', currentScreen === 'customers' && 'Hồ sơ Khách hàng', currentScreen === 'reports' && 'Báo cáo doanh thu', currentScreen === 'properties' && 'Cơ sở & Loại phòng', currentScreen === 'users' && 'Người dùng & Phân quyền', currentScreen === 'settings' && 'Cài đặt hệ thống', currentScreen === 'guide' && 'Hướng dẫn sử dụng')), /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center gap-2 sm:gap-4"
+    className: "lg:hidden text-base"
+  }, "🏡"), /*#__PURE__*/React.createElement("span", {
+    className: "truncate"
+  }, currentScreen === 'dashboard' && 'Tổng quan hôm nay', currentScreen === 'calendar' && 'Lịch phòng', currentScreen === 'bookings' && 'Quản lý Đặt phòng', currentScreen === 'housekeeping' && 'Buồng phòng', currentScreen === 'payments' && 'Sổ quỹ Thu tiền', currentScreen === 'customers' && 'Hồ sơ Khách hàng', currentScreen === 'reports' && 'Báo cáo doanh thu', currentScreen === 'properties' && 'Cơ sở & Loại phòng', currentScreen === 'users' && 'Người dùng & Phân quyền', currentScreen === 'settings' && 'Cài đặt hệ thống', currentScreen === 'guide' && 'Hướng dẫn sử dụng'))), /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-1.5 sm:gap-3 shrink-0"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "relative hidden md:block w-64 lg:w-72"
+    className: "relative hidden md:block w-48 lg:w-72"
   }, /*#__PURE__*/React.createElement("span", {
-    className: "absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 text-sm"
+    className: "absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 text-xs"
   }, "🔍"), /*#__PURE__*/React.createElement("input", {
     type: "text",
     value: globalSearch,
     onChange: e => setGlobalSearch(e.target.value),
     placeholder: "Tìm đơn, khách, phòng... (Ctrl+K)",
-    className: "w-full pl-9 pr-4 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200/80 focus:bg-white text-xs border border-transparent focus:border-teal-500 focus:outline-none transition"
+    className: "w-full pl-8 pr-4 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200/80 focus:bg-white text-xs border border-transparent focus:border-teal-500 focus:outline-none transition"
   }), globalSearch && /*#__PURE__*/React.createElement("button", {
     onClick: () => setGlobalSearch(''),
     className: "absolute inset-y-0 right-0 pr-3 flex items-center text-xs text-slate-400"
@@ -435,7 +443,7 @@ function App() {
     href: "https://docs.google.com/spreadsheets/d/1bW5CSXuvHw9mvHM77W-zZ8jLxaFI9xBE3nqW6RjFlUM/edit",
     target: "_blank",
     rel: "noreferrer",
-    className: "hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-200 transition",
+    className: "hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-200 transition",
     title: "Mở Google Sheets trực tiếp trên Google Drive"
   }, /*#__PURE__*/React.createElement("span", {
     className: "w-2 h-2 rounded-full bg-emerald-500 animate-pulse"
@@ -444,13 +452,15 @@ function App() {
   }, "↗")), /*#__PURE__*/React.createElement("button", {
     onClick: handleSyncGoogleSheets,
     disabled: syncingGSheets,
-    className: "p-2 sm:px-3 sm:py-1.5 rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-800 text-xs font-bold border border-teal-200/90 flex items-center gap-1.5 transition active:scale-95 disabled:opacity-50",
+    className: "px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-200/90 flex items-center gap-1.5 transition active:scale-95 disabled:opacity-50",
     title: "Nhấn để tự động đồng bộ 8 phân hệ sang Google Sheets"
   }, /*#__PURE__*/React.createElement("span", {
-    className: syncingGSheets ? 'animate-spin inline-block' : ''
+    className: `text-sm ${syncingGSheets ? 'animate-spin inline-block' : ''}`
   }, "🔄"), /*#__PURE__*/React.createElement("span", {
     className: "hidden sm:inline"
-  }, syncingGSheets ? 'Đang đồng bộ...' : 'Đồng bộ Sheets'))), /*#__PURE__*/React.createElement("div", {
+  }, syncingGSheets ? 'Đang đồng bộ...' : 'Đồng bộ Sheets'), /*#__PURE__*/React.createElement("span", {
+    className: "sm:hidden text-[11px] font-bold"
+  }, "Sheets"))), /*#__PURE__*/React.createElement("div", {
     className: "relative"
   }, /*#__PURE__*/React.createElement("button", {
     onClick: () => setUserMenuOpen(!userMenuOpen),
@@ -583,7 +593,159 @@ function App() {
     showToast: showToast
   }), currentScreen === 'guide' && /*#__PURE__*/React.createElement(GuideScreen, {
     onNavigate: setCurrentScreen
-  }))), /*#__PURE__*/React.createElement("nav", {
+  }))), mobileDrawerOpen && /*#__PURE__*/React.createElement("div", {
+    className: "lg:hidden fixed inset-0 z-50 flex"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity",
+    onClick: () => setMobileDrawerOpen(false)
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "relative w-80 max-w-[85vw] bg-white h-full shadow-2xl flex flex-col z-10"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-2.5"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "w-10 h-10 rounded-2xl bg-gradient-to-tr from-teal-700 to-emerald-500 text-white flex items-center justify-center text-xl shadow-md"
+  }, "🏡"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", {
+    className: "font-extrabold text-sm text-slate-900"
+  }, "GSHEETS HOME"), /*#__PURE__*/React.createElement("p", {
+    className: "text-[10px] text-teal-700 font-semibold"
+  }, currentUser?.name, " (", currentUser?.roleLabel, ")"))), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setMobileDrawerOpen(false),
+    className: "w-8 h-8 rounded-xl hover:bg-slate-100 text-slate-400 flex items-center justify-center font-bold text-sm"
+  }, "✕")), currentUser?.propertyScope && currentUser?.propertyScope !== 'all' && /*#__PURE__*/React.createElement("div", {
+    className: "mx-3 mt-3 p-2.5 bg-amber-50 rounded-xl border border-amber-200 text-[11px] text-amber-800 font-medium"
+  }, "📍 Bạn đang phụ trách cơ sở: ", /*#__PURE__*/React.createElement("b", null, currentUser?.propertyScopeLabel)), /*#__PURE__*/React.createElement("div", {
+    className: "flex-1 overflow-y-auto p-3 space-y-4 text-xs font-semibold"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "px-3 mb-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-400"
+  }, "VẬN HÀNH"), /*#__PURE__*/React.createElement("div", {
+    className: "space-y-0.5"
+  }, [{
+    id: 'dashboard',
+    label: 'Tổng quan hôm nay',
+    icon: '🟢',
+    show: true
+  }, {
+    id: 'calendar',
+    label: 'Lịch phòng (Timeline)',
+    icon: '📅',
+    show: hasPermission('booking')
+  }, {
+    id: 'bookings',
+    label: 'Quản lý Đặt phòng',
+    icon: '📝',
+    show: hasPermission('booking')
+  }, {
+    id: 'housekeeping',
+    label: 'Buồng phòng & Vệ sinh',
+    icon: '🧹',
+    show: hasPermission('housekeeping')
+  }, {
+    id: 'payments',
+    label: 'Sổ quỹ Thu tiền',
+    icon: '💵',
+    show: hasPermission('payment')
+  }].filter(i => i.show).map(item => /*#__PURE__*/React.createElement("button", {
+    key: item.id,
+    onClick: () => {
+      setCurrentScreen(item.id);
+      setMobileDrawerOpen(false);
+    },
+    className: `w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition ${currentScreen === item.id ? 'bg-teal-50 text-teal-800 font-bold border border-teal-100' : 'text-slate-600 hover:bg-slate-50'}`
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "flex items-center gap-2.5"
+  }, /*#__PURE__*/React.createElement("span", null, item.icon), /*#__PURE__*/React.createElement("span", null, item.label)), currentScreen === item.id && /*#__PURE__*/React.createElement("span", {
+    className: "w-1.5 h-1.5 rounded-full bg-teal-600"
+  }))))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "px-3 mb-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-400"
+  }, "KHÁCH & SỐ LIỆU"), /*#__PURE__*/React.createElement("div", {
+    className: "space-y-0.5"
+  }, [{
+    id: 'customers',
+    label: 'Hồ sơ Khách hàng',
+    icon: '👥',
+    show: hasPermission('customer')
+  }, {
+    id: 'reports',
+    label: 'Báo cáo doanh thu & KPIs',
+    icon: '📊',
+    show: hasPermission('reports')
+  }].filter(i => i.show).map(item => /*#__PURE__*/React.createElement("button", {
+    key: item.id,
+    onClick: () => {
+      setCurrentScreen(item.id);
+      setMobileDrawerOpen(false);
+    },
+    className: `w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition ${currentScreen === item.id ? 'bg-teal-50 text-teal-800 font-bold border border-teal-100' : 'text-slate-600 hover:bg-slate-50'}`
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "flex items-center gap-2.5"
+  }, /*#__PURE__*/React.createElement("span", null, item.icon), /*#__PURE__*/React.createElement("span", null, item.label)), currentScreen === item.id && /*#__PURE__*/React.createElement("span", {
+    className: "w-1.5 h-1.5 rounded-full bg-teal-600"
+  }))))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "px-3 mb-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-400"
+  }, "HỆ THỐNG"), /*#__PURE__*/React.createElement("div", {
+    className: "space-y-0.5"
+  }, [{
+    id: 'properties',
+    label: 'Cơ sở & Loại phòng',
+    icon: '🏨',
+    show: hasPermission('property')
+  }, {
+    id: 'users',
+    label: 'Người dùng & Phân quyền',
+    icon: '👤',
+    show: currentUser?.role === 'admin'
+  }, {
+    id: 'settings',
+    label: 'Cài đặt hệ thống',
+    icon: '⚙️',
+    show: currentUser?.role === 'admin'
+  }, {
+    id: 'guide',
+    label: 'Hướng dẫn sử dụng',
+    icon: '❓',
+    show: true
+  }].filter(i => i.show).map(item => /*#__PURE__*/React.createElement("button", {
+    key: item.id,
+    onClick: () => {
+      setCurrentScreen(item.id);
+      setMobileDrawerOpen(false);
+    },
+    className: `w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition ${currentScreen === item.id ? 'bg-teal-50 text-teal-800 font-bold border border-teal-100' : 'text-slate-600 hover:bg-slate-50'}`
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "flex items-center gap-2.5"
+  }, /*#__PURE__*/React.createElement("span", null, item.icon), /*#__PURE__*/React.createElement("span", null, item.label)), currentScreen === item.id && /*#__PURE__*/React.createElement("span", {
+    className: "w-1.5 h-1.5 rounded-full bg-teal-600"
+  }))))), /*#__PURE__*/React.createElement("div", {
+    className: "pt-2 border-t border-slate-100 space-y-2"
+  }, /*#__PURE__*/React.createElement("a", {
+    href: "https://docs.google.com/spreadsheets/d/1bW5CSXuvHw9mvHM77W-zZ8jLxaFI9xBE3nqW6RjFlUM/edit",
+    target: "_blank",
+    rel: "noreferrer",
+    className: "w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-emerald-50 text-emerald-800 font-bold hover:bg-emerald-100 transition border border-emerald-200/80"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "flex items-center gap-2"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "w-2 h-2 rounded-full bg-emerald-500 animate-pulse"
+  }), /*#__PURE__*/React.createElement("span", null, "Mở Google Sheets Live")), /*#__PURE__*/React.createElement("span", null, "↗")), /*#__PURE__*/React.createElement("button", {
+    onClick: () => {
+      handleSyncGoogleSheets();
+      setMobileDrawerOpen(false);
+    },
+    className: "w-full flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl bg-teal-700 text-white font-bold hover:bg-teal-800 shadow-md transition"
+  }, /*#__PURE__*/React.createElement("span", null, "🔄"), /*#__PURE__*/React.createElement("span", null, "Đồng bộ Google Sheets")))), /*#__PURE__*/React.createElement("div", {
+    className: "p-3 border-t border-slate-100 flex items-center justify-between bg-slate-50"
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => {
+      setMobileDrawerOpen(false);
+      setShowChangePasswordModal(true);
+    },
+    className: "text-xs text-slate-600 hover:text-slate-900 font-bold flex items-center gap-1.5 px-2 py-1.5 rounded-lg"
+  }, /*#__PURE__*/React.createElement("span", null, "🔑"), " Đổi mật khẩu"), /*#__PURE__*/React.createElement("button", {
+    onClick: handleLogout,
+    className: "text-xs text-rose-600 hover:text-rose-700 font-bold flex items-center gap-1.5 px-2 py-1.5 rounded-lg"
+  }, /*#__PURE__*/React.createElement("span", null, "🚪"), " Đăng xuất")))), /*#__PURE__*/React.createElement("nav", {
     className: "lg:hidden fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-40 px-2 py-1.5 flex items-center justify-around shadow-lg"
   }, [{
     id: 'dashboard',
@@ -591,30 +753,30 @@ function App() {
     icon: '🟢'
   }, {
     id: 'calendar',
-    label: 'Lịch',
+    label: 'Lịch phòng',
     icon: '📅'
   }, {
     id: 'bookings',
     label: 'Đặt phòng',
-    icon: '➕'
+    icon: '📝'
   }, {
     id: 'housekeeping',
     label: 'Buồng',
     icon: '🧹'
   }, {
-    id: 'more_menu',
-    label: 'Tài khoản',
-    icon: '👤'
+    id: 'mobile_drawer',
+    label: 'Danh mục',
+    icon: '☰'
   }].map(tab => /*#__PURE__*/React.createElement("button", {
     key: tab.id,
     onClick: () => {
-      if (tab.id === 'more_menu') {
-        setUserMenuOpen(true);
+      if (tab.id === 'mobile_drawer') {
+        setMobileDrawerOpen(true);
       } else {
         setCurrentScreen(tab.id);
       }
     },
-    className: `flex flex-col items-center justify-center py-1 px-2 rounded-xl transition ${currentScreen === tab.id ? 'text-teal-700 font-extrabold scale-105' : 'text-slate-500 font-medium'}`
+    className: `flex flex-col items-center justify-center py-1 px-2.5 rounded-xl transition ${currentScreen === tab.id ? 'text-teal-700 font-extrabold scale-105' : 'text-slate-500 font-medium'}`
   }, /*#__PURE__*/React.createElement("span", {
     className: "text-lg leading-none"
   }, tab.icon), /*#__PURE__*/React.createElement("span", {
@@ -4456,7 +4618,95 @@ function SettingsScreen({
     className: "w-7 h-7 rounded-xl hover:bg-slate-100 text-slate-400 font-bold inline-flex items-center justify-center"
   }, "⋮"))))))), /*#__PURE__*/React.createElement("div", {
     className: "text-[11px] text-slate-400 pt-2 border-t border-slate-100 flex items-center justify-between"
-  }, /*#__PURE__*/React.createElement("span", null, "Hiển thị 1–", categoryTab === 'payment_methods' ? paymentMethodsList.length : categoryTab === 'sources' ? sourcesList.length : servicesList.length, " / ", categoryTab === 'payment_methods' ? paymentMethodsList.length : categoryTab === 'sources' ? sourcesList.length : servicesList.length)))));
+  }, /*#__PURE__*/React.createElement("span", null, "Hiển thị 1–", categoryTab === 'payment_methods' ? paymentMethodsList.length : categoryTab === 'sources' ? sourcesList.length : servicesList.length, " / ", categoryTab === 'payment_methods' ? paymentMethodsList.length : categoryTab === 'sources' ? sourcesList.length : servicesList.length))), /*#__PURE__*/React.createElement("div", {
+    className: "lg:col-span-2 bg-gradient-to-br from-emerald-900 to-teal-950 text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-white/10"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold mb-3 border border-emerald-500/30"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "w-2 h-2 rounded-full bg-emerald-400 animate-pulse"
+  }), /*#__PURE__*/React.createElement("span", null, "Đang kết nối trực tiếp với Google Sheets")), /*#__PURE__*/React.createElement("h3", {
+    className: "text-xl sm:text-2xl font-black tracking-tight"
+  }, "Tích hợp & Đồng bộ Google Sheets"), /*#__PURE__*/React.createElement("p", {
+    className: "text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl leading-relaxed"
+  }, "Hệ thống tự động kích hoạt tiến trình đồng bộ nền sang Google Sheets mỗi khi có phát sinh hoặc thay đổi đơn đặt phòng, phòng, dịch vụ hoặc thanh toán."), /*#__PURE__*/React.createElement("div", {
+    className: "mt-3 flex items-center gap-2 text-xs text-emerald-200"
+  }, /*#__PURE__*/React.createElement("span", null, "🕒 Đồng bộ lần cuối:"), /*#__PURE__*/React.createElement("span", {
+    className: "font-bold text-white bg-white/10 px-2 py-0.5 rounded"
+  }, data?.settings?.lastSyncGSheets ? new Date(data.settings.lastSyncGSheets).toLocaleString('vi-VN') : 'Vừa xong'))), /*#__PURE__*/React.createElement("div", {
+    className: "flex flex-wrap items-center gap-3"
+  }, /*#__PURE__*/React.createElement("a", {
+    href: "https://docs.google.com/spreadsheets/d/1bW5CSXuvHw9mvHM77W-zZ8jLxaFI9xBE3nqW6RjFlUM/edit",
+    target: "_blank",
+    rel: "noreferrer",
+    className: "px-4 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-teal-900 font-extrabold text-xs shadow-md transition flex items-center gap-2"
+  }, /*#__PURE__*/React.createElement("span", null, "📊 Mở file Sheets"), /*#__PURE__*/React.createElement("span", null, "↗")), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: async () => {
+      showToast('🔄 Đang tiến hành đồng bộ sang Google Sheets...');
+      try {
+        const res = await authFetch('/api/sync/gsheets', {
+          method: 'POST'
+        });
+        const json = await res.json();
+        showToast('✅ ' + json.message);
+        onRefresh();
+      } catch (e) {
+        showToast('Lỗi đồng bộ: ' + e.message, 'error');
+      }
+    },
+    className: "px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-extrabold text-xs shadow-md transition flex items-center gap-2 active:scale-95"
+  }, /*#__PURE__*/React.createElement("span", null, "⚡ Đồng bộ ngay bây giờ")))), /*#__PURE__*/React.createElement("div", {
+    className: "relative z-10 pt-6"
+  }, /*#__PURE__*/React.createElement("h4", {
+    className: "text-xs font-bold uppercase tracking-wider text-emerald-300 mb-3"
+  }, "Danh sách 8 phân hệ đang được đồng bộ tự động:"), /*#__PURE__*/React.createElement("div", {
+    className: "grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs"
+  }, [{
+    title: '1. Tổng quan',
+    desc: 'KPIs, doanh thu, công suất',
+    icon: '🟢'
+  }, {
+    title: '2. Đặt phòng',
+    desc: 'Danh sách đơn, phòng, khách',
+    icon: '📝'
+  }, {
+    title: '3. Thu tiền',
+    desc: 'Phiếu thu, cọc, chuyển khoản',
+    icon: '💵'
+  }, {
+    title: '4. Cơ sở & Phòng',
+    desc: 'Các chi nhánh homestay & phòng',
+    icon: '🏨'
+  }, {
+    title: '5. Bảng giá',
+    desc: 'Giá ngày thường & cuối tuần',
+    icon: '🏷️'
+  }, {
+    title: '6. Khách hàng',
+    desc: 'Hồ sơ khách & hạng VIP',
+    icon: '👥'
+  }, {
+    title: '7. Buồng phòng',
+    desc: 'Trạng thái sạch/bẩn buồng phòng',
+    icon: '🧹'
+  }, {
+    title: '8. Cấu hình',
+    desc: 'Thông tin đơn vị & check-in/out',
+    icon: '⚙️'
+  }].map((sh, idx) => /*#__PURE__*/React.createElement("div", {
+    key: idx,
+    className: "bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/10 flex items-start gap-2.5"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "text-base"
+  }, sh.icon), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "font-bold text-white flex items-center gap-1.5"
+  }, /*#__PURE__*/React.createElement("span", null, sh.title), /*#__PURE__*/React.createElement("span", {
+    className: "text-[10px] text-emerald-400"
+  }, "✓")), /*#__PURE__*/React.createElement("div", {
+    className: "text-[11px] text-slate-300 mt-0.5 leading-snug"
+  }, sh.desc)))))))));
 }
 
 // SCREEN 11: GUIDE (HƯỚNG DẪN SỬ DỤNG)
@@ -4529,9 +4779,15 @@ function GuideScreen({
   }, "Hướng dẫn sử dụng"), /*#__PURE__*/React.createElement("p", {
     className: "text-xs text-slate-400 mt-1"
   }, "Các thao tác chính của phần mềm quản lý đặt phòng khách sạn & homestay")), /*#__PURE__*/React.createElement("div", {
+    className: "lg:hidden flex gap-1.5 overflow-x-auto pb-1 scrollbar-none"
+  }, menuItems.map(item => /*#__PURE__*/React.createElement("button", {
+    key: item.id,
+    onClick: () => setActiveSection(item.id),
+    className: `px-3 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap shrink-0 flex items-center gap-1.5 ${activeSection === item.id ? 'bg-teal-700 text-white shadow-sm' : 'bg-white text-slate-600 border border-slate-200'}`
+  }, /*#__PURE__*/React.createElement("span", null, item.icon), /*#__PURE__*/React.createElement("span", null, item.label)))), /*#__PURE__*/React.createElement("div", {
     className: "grid grid-cols-1 lg:grid-cols-4 gap-6 items-start"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "bg-white rounded-3xl p-4 border border-slate-200/80 shadow-sm space-y-2 sticky top-6"
+    className: "hidden lg:block bg-white rounded-3xl p-4 border border-slate-200/80 shadow-sm space-y-2 sticky top-6"
   }, /*#__PURE__*/React.createElement("span", {
     className: "text-[10px] font-extrabold uppercase text-slate-400 px-3 tracking-wider"
   }, "Nội dung"), /*#__PURE__*/React.createElement("nav", {

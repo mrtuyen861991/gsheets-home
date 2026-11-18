@@ -1482,6 +1482,12 @@
       "username": "admin",
       "createdAt": "2026-11-18T03:04:00.755Z",
       "expiresAt": 1796180640755
+    },
+    "f7b85877c306ede91b81a8a090b2b27d9817f84a2bd018809619e47f12c97652": {
+      "userId": "u_admin",
+      "username": "admin",
+      "createdAt": "2026-11-18T05:49:27.075Z",
+      "expiresAt": 1796190567075
     }
   }
 }
