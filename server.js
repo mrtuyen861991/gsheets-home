@@ -1225,6 +1225,17 @@ const server = http.createServer((req, res) => {
   });
 });
 
+// Ensure client bundle exists before starting
+const bundleFile = path.join(PUBLIC_DIR, 'app.bundle.js');
+if (!fs.existsSync(bundleFile)) {
+  console.log('⚡ Generating app.bundle.js...');
+  try {
+    require('./compile');
+  } catch (e) {
+    console.error('Warning: could not compile bundle on startup:', e.message);
+  }
+}
+
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`\n======================================================`);
   console.log(`🔒 GSHEETS HOME v1.0 [SECURE RBAC] đang chạy!`);

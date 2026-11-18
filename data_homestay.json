@@ -1476,5 +1476,12 @@
       }
     }
   ],
-  "sessions": {}
+  "sessions": {
+    "72d438bc1b4772b3e163d7b369d8859dfcabe28c2ebe3440cf4b8945dfc386a4": {
+      "userId": "u_admin",
+      "username": "admin",
+      "createdAt": "2026-11-18T03:04:00.755Z",
+      "expiresAt": 1796180640755
+    }
+  }
 }

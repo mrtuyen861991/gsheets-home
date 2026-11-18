@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "build": "echo 'Build ready'"
+    "build": "node compile.js"
   },
   "engines": {
     "node": ">=18.0.0"
