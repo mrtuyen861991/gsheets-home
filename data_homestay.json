@@ -16,7 +16,7 @@
     "googleSheetsUrl": "https://docs.google.com/spreadsheets/d/1bW5CSXuvHw9mvHM77W-zZ8jLxaFI9xBE3nqW6RjFlUM/edit",
     "autoSyncGSheets": true,
     "spreadsheetId": "1bW5CSXuvHw9mvHM77W-zZ8jLxaFI9xBE3nqW6RjFlUM",
-    "lastSyncGSheets": "2026-11-16T08:05:17.999Z"
+    "lastSyncGSheets": "2026-11-18T05:50:39.110Z"
   },
   "categories": {
     "bookingSources": [
@@ -1488,6 +1488,18 @@
       "username": "admin",
       "createdAt": "2026-11-18T05:49:27.075Z",
       "expiresAt": 1796190567075
+    },
+    "56e941e0428a1a2bae6ef9539b6958931f998b94103eae994ded90064fc7ddd2": {
+      "userId": "u_admin",
+      "username": "admin",
+      "createdAt": "2026-11-18T05:50:16.666Z",
+      "expiresAt": 1796190616666
+    },
+    "600bedebd422cb581714a42bb49cac08f83c10b267152183c6b46919ae085d25": {
+      "userId": "u_admin",
+      "username": "admin",
+      "createdAt": "2026-11-18T07:59:57.475Z",
+      "expiresAt": 1796198397475
     }
   }
 }

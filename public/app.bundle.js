@@ -1,7 +1,7 @@
 /**
  * GSHEETS HOME - Quản lý Homestay & Nghỉ Dưỡng
  * Pre-compiled Client Bundle (Babel Classic Runtime)
- * Generated at: 2026-11-18T05:48:58.640Z
+ * Generated at: 2026-11-18T07:59:10.808Z
  * Load time: < 30ms (zero in-browser Babel overhead)
  */
 const {

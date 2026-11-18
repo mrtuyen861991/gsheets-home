@@ -1098,8 +1098,12 @@ const server = http.createServer((req, res) => {
       <head>
         <meta charset="UTF-8">
         <title>Phiếu Xác Nhận Đặt Phòng - ${booking.id}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
         <style>
-          body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 40px; color: #1e293b; background: #fff; }
+          * { font-family: 'Montserrat', system-ui, -apple-system, sans-serif; }
+          body { font-family: 'Montserrat', system-ui, -apple-system, sans-serif; margin: 40px; color: #1e293b; background: #fff; }
           .voucher-card { max-width: 750px; margin: 0 auto; border: 2px solid #0f766e; border-radius: 16px; padding: 36px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
           .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed #cbd5e1; padding-bottom: 24px; margin-bottom: 24px; }
           .brand h1 { margin: 0; color: #0f766e; font-size: 24px; }
