@@ -1523,7 +1523,7 @@ const { useState, useEffect, useMemo, useRef } = React;
     function CalendarTimelineScreen({ data, filteredRooms, filteredBookings, onSelectRange, onViewBooking }) {
       const [viewDays, setViewDays] = useState(14);
       const [startDateOffset, setStartDateOffset] = useState(0);
-      const baseDate = new Date('2026-11-12');
+      const baseDate = useMemo(() => new Date('2026-11-20T00:00:00'), []);
 
       const timelineDates = useMemo(() => {
         const dates = [];
@@ -1538,12 +1538,13 @@ const { useState, useEffect, useMemo, useRef } = React;
           const mm = String(d.getMonth() + 1).padStart(2, '0');
           const dd = String(d.getDate()).padStart(2, '0');
           const dateStr = `${yyyy}-${mm}-${dd}`;
-          const isToday = (dd === '13' && mm === '11');
+          const isToday = (yyyy === 2026 && mm === '11' && dd === '20');
 
           dates.push({
             dateStr,
             day: dd,
             month: mm,
+            year: yyyy,
             dayOfWeek: dayNames[d.getDay()],
             isToday,
             isWeekend: (d.getDay() === 5 || d.getDay() === 6)
@@ -1573,29 +1574,58 @@ const { useState, useEffect, useMemo, useRef } = React;
       };
 
       return (
-        <div className="bg-white rounded-3xl border border-slate-200/80 shadow-sm overflow-hidden flex flex-col">
+        <div className="bg-white rounded-3xl border border-slate-200/80 shadow-sm overflow-hidden flex flex-col space-y-2">
+          {/* Timeline Navigation & Quick Jumps */}
           <div className="p-4 sm:p-5 border-b border-slate-100 flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <button
                 onClick={() => setStartDateOffset(o => o - 7)}
                 className="w-8 h-8 rounded-xl border border-slate-200 flex items-center justify-center hover:bg-slate-50 text-slate-600 font-bold"
+                title="Lùi 7 ngày"
               >
                 ‹
               </button>
               <button
                 onClick={() => setStartDateOffset(0)}
-                className="px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50"
+                className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition ${
+                  startDateOffset === 0 ? 'bg-teal-700 text-white border-teal-700 shadow-sm' : 'border-slate-200 text-slate-700 hover:bg-slate-50'
+                }`}
               >
-                Hôm nay
+                Hôm nay (20/11)
+              </button>
+              <button
+                onClick={() => setStartDateOffset(11)} // Jump to Dec 1, 2026
+                className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition ${
+                  startDateOffset === 11 ? 'bg-teal-700 text-white border-teal-700 shadow-sm' : 'border-slate-200 text-slate-700 hover:bg-slate-50'
+                }`}
+              >
+                Tháng 12/2026
+              </button>
+              <button
+                onClick={() => setStartDateOffset(34)} // Jump to Dec 24, 2026 (Giáng sinh & Countdown)
+                className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition ${
+                  startDateOffset === 34 ? 'bg-teal-700 text-white border-teal-700 shadow-sm' : 'border-slate-200 text-slate-700 hover:bg-slate-50'
+                }`}
+              >
+                🎄 Giáng Sinh & Tết Tây
+              </button>
+              <button
+                onClick={() => setStartDateOffset(42)} // Jump to Jan 1, 2027
+                className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition ${
+                  startDateOffset === 42 ? 'bg-teal-700 text-white border-teal-700 shadow-sm' : 'border-slate-200 text-slate-700 hover:bg-slate-50'
+                }`}
+              >
+                🎆 Tháng 01/2027
               </button>
               <button
                 onClick={() => setStartDateOffset(o => o + 7)}
                 className="w-8 h-8 rounded-xl border border-slate-200 flex items-center justify-center hover:bg-slate-50 text-slate-600 font-bold"
+                title="Tiến 7 ngày"
               >
                 ›
               </button>
               <span className="text-xs font-bold text-slate-800 ml-2">
-                📅 {timelineDates[0]?.day}/{timelineDates[0]?.month} - {timelineDates[timelineDates.length - 1]?.day}/{timelineDates[timelineDates.length - 1]?.month}/2026
+                📅 {timelineDates[0]?.day}/{timelineDates[0]?.month}/{timelineDates[0]?.year} – {timelineDates[timelineDates.length - 1]?.day}/{timelineDates[timelineDates.length - 1]?.month}/{timelineDates[timelineDates.length - 1]?.year}
               </span>
             </div>
 
@@ -1661,11 +1691,19 @@ const { useState, useEffect, useMemo, useRef } = React;
                         <td className="sticky left-0 z-10 bg-teal-50/90 p-2.5 px-3 border-r border-teal-200">
                           🏨 {prop.name} ({pRooms.length} phòng)
                         </td>
-                        {timelineDates.map(d => (
-                          <td key={d.dateStr} className="p-1 text-center border-r border-teal-100 text-[10px] text-teal-700">
-                            {Math.max(1, pRooms.length - 2)}
-                          </td>
-                        ))}
+                        {timelineDates.map(d => {
+                          const bookedCount = pRooms.filter(r => {
+                            return (filteredBookings || []).some(b => b.roomId === r.id && d.dateStr >= b.checkInDate && d.dateStr < b.checkOutDate);
+                          }).length;
+                          const avail = Math.max(0, pRooms.length - bookedCount);
+                          return (
+                            <td key={d.dateStr} className={`p-1 text-center border-r border-teal-100 text-[10px] font-bold ${
+                              avail === 0 ? 'text-rose-600 bg-rose-50/40' : 'text-teal-700'
+                            }`} title={`Ngày ${d.dateStr}: còn trống ${avail}/${pRooms.length} phòng`}>
+                              {avail === 0 ? 'Hết' : avail}
+                            </td>
+                          );
+                        })}
                       </tr>
 
                       {pRooms.map(room => {
@@ -1705,7 +1743,7 @@ const { useState, useEffect, useMemo, useRef } = React;
                                         onViewBooking(booking);
                                       }}
                                       className={`booking-bar w-full h-8 rounded-lg px-2 flex items-center justify-between text-[11px] font-bold text-white shadow-sm overflow-hidden ${
-                                        booking.status === 'in_house' ? 'bg-emerald-600' :
+                                        (booking.status === 'in_house' || booking.status === 'occupied') ? 'bg-emerald-600' :
                                         booking.status === 'hold' ? 'bg-amber-500' :
                                         booking.status === 'checked_out' ? 'bg-slate-400' : 'bg-sky-600'
                                       }`}
