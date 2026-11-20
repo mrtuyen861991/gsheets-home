@@ -83,10 +83,25 @@
   </script>
 
   <!-- Pre-compiled Fast App Bundle -->
-  <script src="/app.bundle.js?v=2.3"></script>
+  <script src="/app.bundle.js?v=2.4"></script>
 
   <!-- Safety Fallback: In case of cache issues or network drop, provide 1-click reload button -->
   <script>
+    // If after 8 seconds React still hasn't mounted, offer a 1-click reload
+    setTimeout(function() {
+      var root = document.getElementById('root');
+      if (root && root.innerHTML.indexOf('Đang tải ứng dụng') !== -1) {
+        root.innerHTML = '<div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #f8fafc; font-family: \'Montserrat\', sans-serif; padding: 20px;">' +
+          '<div style="max-width: 450px; background: white; border: 1px solid #e2e8f0; border-radius: 24px; padding: 32px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: center;">' +
+            '<div style="font-size: 36px; margin-bottom: 12px;">🏡</div>' +
+            '<h3 style="font-weight: 800; color: #005853; margin: 0 0 8px; font-size: 18px; font-family: \'Montserrat\', sans-serif;">GSHEETS HOME</h3>' +
+            '<p style="color: #64748b; font-size: 13px; line-height: 1.5; margin: 0 0 20px; font-family: \'Montserrat\', sans-serif;">Máy chủ Render đang hoàn tất khởi động hoặc vừa được cập nhật bản mới. Bấm nút dưới đây để kết nối lại:</p>' +
+            '<button onclick="location.reload(true);" style="background: #005853; color: white; border: none; padding: 12px 24px; font-weight: bold; border-radius: 12px; cursor: pointer; font-size: 13px; box-shadow: 0 4px 12px rgba(0,88,83,0.25); font-family: \'Montserrat\', sans-serif;">🔄 Kết nối & Làm mới</button>' +
+          '</div>' +
+        '</div>';
+      }
+    }, 8000);
+
     window.addEventListener('error', function(e) {
       console.error("Global captured error:", e);
       var root = document.getElementById('root');

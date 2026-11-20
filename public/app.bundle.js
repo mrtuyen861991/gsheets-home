@@ -1,7 +1,7 @@
 /**
  * GSHEETS HOME - Quản lý Homestay & Nghỉ Dưỡng
  * Pre-compiled Client Bundle (Babel Classic Runtime)
- * Generated at: 2026-11-18T07:59:10.808Z
+ * Generated at: 2026-11-20T07:44:26.553Z
  * Load time: < 30ms (zero in-browser Babel overhead)
  */
 const {
@@ -273,16 +273,19 @@ function App() {
       onLoginSuccess: handleLoginSuccess
     });
   }
-  if (loading) {
+  if (loading || !data) {
     return /*#__PURE__*/React.createElement("div", {
-      className: "flex flex-col items-center justify-center min-h-screen bg-slate-50"
+      className: "flex flex-col items-center justify-center min-h-screen bg-slate-50 p-4"
     }, /*#__PURE__*/React.createElement("div", {
       className: "w-12 h-12 border-4 border-teal-600 border-t-transparent rounded-full animate-spin"
     }), /*#__PURE__*/React.createElement("p", {
       className: "mt-4 font-bold text-teal-800 text-lg"
     }, "Đang xác thực bảo mật & tải GSHEETS HOME..."), /*#__PURE__*/React.createElement("p", {
       className: "text-xs text-slate-400"
-    }, "Đăng nhập bởi: ", currentUser?.name));
+    }, "Đăng nhập bởi: ", currentUser?.name, " (", currentUser?.roleLabel, ")"), /*#__PURE__*/React.createElement("button", {
+      onClick: () => refreshData(),
+      className: "mt-4 px-4 py-2 rounded-xl bg-teal-700 hover:bg-teal-800 text-white font-bold text-xs shadow-md transition"
+    }, "🔄 Tải lại dữ liệu"));
   }
   return /*#__PURE__*/React.createElement("div", {
     className: "flex min-h-screen bg-[#f8fafc]"
@@ -1514,10 +1517,21 @@ function BookingsListScreen({
   onViewDetail
 }) {
   const [filterStatus, setFilterStatus] = useState('all');
-  const displayed = bookings.filter(b => {
-    if (filterStatus !== 'all' && b.status !== filterStatus) return false;
-    return true;
-  });
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 15;
+  const displayed = useMemo(() => {
+    return (bookings || []).filter(b => {
+      if (filterStatus === 'all') return true;
+      if (filterStatus === 'in_house') return b.status === 'in_house' || b.status === 'occupied';
+      return b.status === filterStatus;
+    });
+  }, [bookings, filterStatus]);
+  const totalPages = Math.ceil(displayed.length / pageSize) || 1;
+  const paginatedBookings = displayed.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+  const handleFilterChange = status => {
+    setFilterStatus(status);
+    setCurrentPage(1);
+  };
   return /*#__PURE__*/React.createElement("div", {
     className: "bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-sm space-y-4"
   }, /*#__PURE__*/React.createElement("div", {
@@ -1545,7 +1559,7 @@ function BookingsListScreen({
     label: 'Đã trả'
   }].map(f => /*#__PURE__*/React.createElement("button", {
     key: f.id,
-    onClick: () => setFilterStatus(f.id),
+    onClick: () => handleFilterChange(f.id),
     className: `px-3 py-1 rounded-lg transition whitespace-nowrap ${filterStatus === f.id ? 'bg-white text-teal-800 shadow-sm' : 'text-slate-500'}`
   }, f.label)))), /*#__PURE__*/React.createElement("div", {
     className: "overflow-x-auto"
@@ -1571,7 +1585,7 @@ function BookingsListScreen({
     className: "py-3 px-2 text-center"
   }, "Thao tác"))), /*#__PURE__*/React.createElement("tbody", {
     className: "divide-y divide-slate-100 font-medium"
-  }, displayed.map(b => /*#__PURE__*/React.createElement("tr", {
+  }, paginatedBookings.map(b => /*#__PURE__*/React.createElement("tr", {
     key: b.id,
     className: "hover:bg-slate-50/60 transition"
   }, /*#__PURE__*/React.createElement("td", {
@@ -1597,8 +1611,8 @@ function BookingsListScreen({
   }, b.nights, " đêm · ", b.guestsCount, " khách")), /*#__PURE__*/React.createElement("td", {
     className: "py-3 px-2"
   }, /*#__PURE__*/React.createElement("span", {
-    className: `px-2.5 py-1 rounded-full font-bold text-[10px] ${b.status === 'in_house' ? 'bg-emerald-100 text-emerald-800' : b.status === 'hold' ? 'bg-amber-100 text-amber-800' : b.status === 'checked_out' ? 'bg-slate-200 text-slate-700' : 'bg-sky-100 text-sky-800'}`
-  }, b.status === 'in_house' ? 'Đang ở' : b.status === 'hold' ? 'Giữ chỗ' : b.status === 'checked_out' ? 'Đã trả' : 'Đã xác nhận')), /*#__PURE__*/React.createElement("td", {
+    className: `px-2.5 py-1 rounded-full font-bold text-[10px] ${b.status === 'in_house' || b.status === 'occupied' ? 'bg-emerald-100 text-emerald-800' : b.status === 'hold' ? 'bg-amber-100 text-amber-800' : b.status === 'checked_out' ? 'bg-slate-200 text-slate-700' : 'bg-sky-100 text-sky-800'}`
+  }, b.status === 'in_house' || b.status === 'occupied' ? 'Đang ở' : b.status === 'hold' ? 'Giữ chỗ' : b.status === 'checked_out' ? 'Đã trả' : 'Đã xác nhận')), /*#__PURE__*/React.createElement("td", {
     className: "py-3 px-2 text-right font-bold text-slate-900"
   }, formatVND(b.grandTotal)), /*#__PURE__*/React.createElement("td", {
     className: "py-3 px-2 text-right"
@@ -1613,7 +1627,7 @@ function BookingsListScreen({
   }, b.status === 'confirmed' && /*#__PURE__*/React.createElement("button", {
     onClick: () => onCheckIn(b.id),
     className: "px-2.5 py-1 rounded-lg bg-teal-600 text-white font-bold text-[10px] hover:bg-teal-700"
-  }, "Nhận"), b.status === 'in_house' && /*#__PURE__*/React.createElement("button", {
+  }, "Nhận"), (b.status === 'in_house' || b.status === 'occupied') && /*#__PURE__*/React.createElement("button", {
     onClick: () => onCheckOut(b.id),
     className: "px-2.5 py-1 rounded-lg bg-slate-700 text-white font-bold text-[10px] hover:bg-slate-800"
   }, "Trả"), /*#__PURE__*/React.createElement("button", {
@@ -1624,7 +1638,38 @@ function BookingsListScreen({
     onClick: () => onViewDetail(b),
     className: "p-1 rounded-lg text-teal-600 hover:bg-teal-50",
     title: "Xem chi tiết"
-  }, "👁️")))))))));
+  }, "👁️")))))))), /*#__PURE__*/React.createElement("div", {
+    className: "flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-slate-100 text-xs text-slate-500"
+  }, /*#__PURE__*/React.createElement("div", null, "Hiển thị ", /*#__PURE__*/React.createElement("span", {
+    className: "font-bold text-slate-700"
+  }, displayed.length ? (currentPage - 1) * pageSize + 1 : 0), " – ", /*#__PURE__*/React.createElement("span", {
+    className: "font-bold text-slate-700"
+  }, Math.min(currentPage * pageSize, displayed.length)), " trên tổng số ", /*#__PURE__*/React.createElement("span", {
+    className: "font-bold text-teal-700"
+  }, displayed.length), " đơn đặt phòng"), totalPages > 1 && /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-1"
+  }, /*#__PURE__*/React.createElement("button", {
+    disabled: currentPage === 1,
+    onClick: () => setCurrentPage(p => Math.max(1, p - 1)),
+    className: "px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-600 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 font-bold"
+  }, "‹"), Array.from({
+    length: totalPages
+  }, (_, i) => i + 1).filter(p => p === 1 || p === totalPages || Math.abs(p - currentPage) <= 1).reduce((acc, p, idx, arr) => {
+    if (idx > 0 && p - arr[idx - 1] > 1) acc.push('...');
+    acc.push(p);
+    return acc;
+  }, []).map((item, idx) => item === '...' ? /*#__PURE__*/React.createElement("span", {
+    key: 'ellipsis-' + idx,
+    className: "px-2 text-slate-400"
+  }, "...") : /*#__PURE__*/React.createElement("button", {
+    key: item,
+    onClick: () => setCurrentPage(item),
+    className: `min-w-[32px] py-1.5 px-2 rounded-lg font-bold text-xs transition ${currentPage === item ? 'bg-teal-700 text-white shadow-sm' : 'border border-slate-200 text-slate-700 hover:bg-slate-50'}`
+  }, item)), /*#__PURE__*/React.createElement("button", {
+    disabled: currentPage === totalPages,
+    onClick: () => setCurrentPage(p => Math.min(totalPages, p + 1)),
+    className: "px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-600 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 font-bold"
+  }, "›"))));
 }
 
 // ==========================================
@@ -1840,15 +1885,36 @@ function PaymentsScreen({
     return list;
   }, [payments, propertyFilter, methodFilter, searchQuery]);
   const totals = useMemo(() => {
-    let totalThu = 162865000;
-    let daHoanTien = 2150000;
-    let thucThu = 160715000;
+    let totalThu = 0;
+    let daHoanTien = 0;
+    let depositCount = 0;
+    let depositSum = 0;
+    let refundCount = 0;
+    let receiptCount = 0;
+    filteredPayments.forEach(p => {
+      const amt = Number(p.amount) || 0;
+      if (p.type === 'refund' || amt < 0) {
+        daHoanTien += Math.abs(amt);
+        refundCount++;
+      } else {
+        totalThu += amt;
+        receiptCount++;
+        if (p.type === 'deposit') {
+          depositCount++;
+          depositSum += amt;
+        }
+      }
+    });
+    const thucThu = totalThu - daHoanTien;
     return {
       totalThu,
       daHoanTien,
-      thucThu
+      thucThu,
+      receiptCount,
+      refundCount,
+      depositSum
     };
-  }, []);
+  }, [filteredPayments]);
   const totalPages = Math.ceil(filteredPayments.length / pageSize) || 1;
   const paginatedList = filteredPayments.slice((currentPage - 1) * pageSize, currentPage * pageSize);
   const handleExportExcel = () => {
@@ -1885,7 +1951,7 @@ function PaymentsScreen({
     className: "text-2xl sm:text-3xl font-black text-slate-900"
   }, formatVND(totals.totalThu)), /*#__PURE__*/React.createElement("div", {
     className: "text-xs text-slate-400 mt-1"
-  }, "89 phiếu thu · cọc 141 tr"))), /*#__PURE__*/React.createElement("div", {
+  }, totals.receiptCount, " phiếu thu · cọc ", formatVND(totals.depositSum)))), /*#__PURE__*/React.createElement("div", {
     className: "p-5 rounded-3xl bg-white border border-slate-200/80 shadow-sm flex flex-col justify-between"
   }, /*#__PURE__*/React.createElement("span", {
     className: "text-xs font-bold text-slate-500 uppercase flex items-center gap-1.5"
@@ -1897,7 +1963,7 @@ function PaymentsScreen({
     className: "text-2xl sm:text-3xl font-black text-slate-900"
   }, formatVND(totals.daHoanTien)), /*#__PURE__*/React.createElement("div", {
     className: "text-xs text-slate-400 mt-1"
-  }, "1 phiếu hoàn"))), /*#__PURE__*/React.createElement("div", {
+  }, totals.refundCount, " phiếu hoàn"))), /*#__PURE__*/React.createElement("div", {
     className: "p-5 rounded-3xl bg-gradient-to-br from-teal-700 to-indigo-800 text-white shadow-md flex flex-col justify-between"
   }, /*#__PURE__*/React.createElement("span", {
     className: "text-xs font-bold text-teal-200 uppercase flex items-center gap-1.5"
@@ -1907,7 +1973,7 @@ function PaymentsScreen({
     className: "text-2xl sm:text-3xl font-black"
   }, formatVND(totals.thucThu)), /*#__PURE__*/React.createElement("div", {
     className: "text-xs text-teal-100 mt-1"
-  }, "Nhiều nhất: OTA thu hộ 103 tr")))), /*#__PURE__*/React.createElement("div", {
+  }, filteredPayments.length, " giao dịch thanh toán")))), /*#__PURE__*/React.createElement("div", {
     className: "flex flex-wrap items-center gap-2.5"
   }, /*#__PURE__*/React.createElement("button", {
     className: "px-3.5 py-2.5 rounded-2xl bg-white border border-slate-200 text-xs font-bold text-slate-700 shadow-sm flex items-center gap-2"

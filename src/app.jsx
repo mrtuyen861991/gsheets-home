@@ -251,12 +251,18 @@ const { useState, useEffect, useMemo, useRef } = React;
         );
       }
 
-      if (loading) {
+      if (loading || !data) {
         return (
-          <div className="flex flex-col items-center justify-center min-h-screen bg-slate-50">
+          <div className="flex flex-col items-center justify-center min-h-screen bg-slate-50 p-4">
             <div className="w-12 h-12 border-4 border-teal-600 border-t-transparent rounded-full animate-spin"></div>
             <p className="mt-4 font-bold text-teal-800 text-lg">Đang xác thực bảo mật & tải GSHEETS HOME...</p>
-            <p className="text-xs text-slate-400">Đăng nhập bởi: {currentUser?.name}</p>
+            <p className="text-xs text-slate-400">Đăng nhập bởi: {currentUser?.name} ({currentUser?.roleLabel})</p>
+            <button
+              onClick={() => refreshData()}
+              className="mt-4 px-4 py-2 rounded-xl bg-teal-700 hover:bg-teal-800 text-white font-bold text-xs shadow-md transition"
+            >
+              🔄 Tải lại dữ liệu
+            </button>
           </div>
         );
       }
@@ -1732,11 +1738,24 @@ const { useState, useEffect, useMemo, useRef } = React;
     // ==========================================
     function BookingsListScreen({ bookings, data, onCheckIn, onCheckOut, onOpenNewBooking, onOpenGroupBooking, onPrintVoucher, onViewDetail }) {
       const [filterStatus, setFilterStatus] = useState('all');
+      const [currentPage, setCurrentPage] = useState(1);
+      const pageSize = 15;
 
-      const displayed = bookings.filter(b => {
-        if (filterStatus !== 'all' && b.status !== filterStatus) return false;
-        return true;
-      });
+      const displayed = useMemo(() => {
+        return (bookings || []).filter(b => {
+          if (filterStatus === 'all') return true;
+          if (filterStatus === 'in_house') return b.status === 'in_house' || b.status === 'occupied';
+          return b.status === filterStatus;
+        });
+      }, [bookings, filterStatus]);
+
+      const totalPages = Math.ceil(displayed.length / pageSize) || 1;
+      const paginatedBookings = displayed.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+
+      const handleFilterChange = (status) => {
+        setFilterStatus(status);
+        setCurrentPage(1);
+      };
 
       return (
         <div className="bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-sm space-y-4">
@@ -1756,7 +1775,7 @@ const { useState, useEffect, useMemo, useRef } = React;
               ].map(f => (
                 <button
                   key={f.id}
-                  onClick={() => setFilterStatus(f.id)}
+                  onClick={() => handleFilterChange(f.id)}
                   className={`px-3 py-1 rounded-lg transition whitespace-nowrap ${filterStatus === f.id ? 'bg-white text-teal-800 shadow-sm' : 'text-slate-500'}`}
                 >
                   {f.label}
@@ -1780,7 +1799,7 @@ const { useState, useEffect, useMemo, useRef } = React;
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 font-medium">
-                {displayed.map(b => (
+                {paginatedBookings.map(b => (
                   <tr key={b.id} className="hover:bg-slate-50/60 transition">
                     <td className="py-3 px-2 font-mono font-bold text-teal-700">
                       {b.id}
@@ -1800,11 +1819,11 @@ const { useState, useEffect, useMemo, useRef } = React;
                     </td>
                     <td className="py-3 px-2">
                       <span className={`px-2.5 py-1 rounded-full font-bold text-[10px] ${
-                        b.status === 'in_house' ? 'bg-emerald-100 text-emerald-800' :
+                        (b.status === 'in_house' || b.status === 'occupied') ? 'bg-emerald-100 text-emerald-800' :
                         b.status === 'hold' ? 'bg-amber-100 text-amber-800' :
                         b.status === 'checked_out' ? 'bg-slate-200 text-slate-700' : 'bg-sky-100 text-sky-800'
                       }`}>
-                        {b.status === 'in_house' ? 'Đang ở' :
+                        {(b.status === 'in_house' || b.status === 'occupied') ? 'Đang ở' :
                          b.status === 'hold' ? 'Giữ chỗ' :
                          b.status === 'checked_out' ? 'Đã trả' : 'Đã xác nhận'}
                       </span>
@@ -1829,7 +1848,7 @@ const { useState, useEffect, useMemo, useRef } = React;
                             Nhận
                           </button>
                         )}
-                        {b.status === 'in_house' && (
+                        {(b.status === 'in_house' || b.status === 'occupied') && (
                           <button
                             onClick={() => onCheckOut(b.id)}
                             className="px-2.5 py-1 rounded-lg bg-slate-700 text-white font-bold text-[10px] hover:bg-slate-800"
@@ -1857,6 +1876,53 @@ const { useState, useEffect, useMemo, useRef } = React;
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* Phân trang đặt phòng mượt mà */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-slate-100 text-xs text-slate-500">
+            <div>
+              Hiển thị <span className="font-bold text-slate-700">{displayed.length ? (currentPage - 1) * pageSize + 1 : 0}</span> – <span className="font-bold text-slate-700">{Math.min(currentPage * pageSize, displayed.length)}</span> trên tổng số <span className="font-bold text-teal-700">{displayed.length}</span> đơn đặt phòng
+            </div>
+            {totalPages > 1 && (
+              <div className="flex items-center gap-1">
+                <button
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                  className="px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-600 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 font-bold"
+                >
+                  ‹
+                </button>
+                {Array.from({ length: totalPages }, (_, i) => i + 1)
+                  .filter(p => p === 1 || p === totalPages || Math.abs(p - currentPage) <= 1)
+                  .reduce((acc, p, idx, arr) => {
+                    if (idx > 0 && p - arr[idx - 1] > 1) acc.push('...');
+                    acc.push(p);
+                    return acc;
+                  }, [])
+                  .map((item, idx) => item === '...' ? (
+                    <span key={'ellipsis-' + idx} className="px-2 text-slate-400">...</span>
+                  ) : (
+                    <button
+                      key={item}
+                      onClick={() => setCurrentPage(item)}
+                      className={`min-w-[32px] py-1.5 px-2 rounded-lg font-bold text-xs transition ${
+                        currentPage === item
+                          ? 'bg-teal-700 text-white shadow-sm'
+                          : 'border border-slate-200 text-slate-700 hover:bg-slate-50'
+                      }`}
+                    >
+                      {item}
+                    </button>
+                  ))}
+                <button
+                  disabled={currentPage === totalPages}
+                  onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                  className="px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-600 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 font-bold"
+                >
+                  ›
+                </button>
+              </div>
+            )}
           </div>
         </div>
       );
@@ -2051,11 +2117,30 @@ const { useState, useEffect, useMemo, useRef } = React;
       }, [payments, propertyFilter, methodFilter, searchQuery]);
 
       const totals = useMemo(() => {
-        let totalThu = 162865000;
-        let daHoanTien = 2150000;
-        let thucThu = 160715000;
-        return { totalThu, daHoanTien, thucThu };
-      }, []);
+        let totalThu = 0;
+        let daHoanTien = 0;
+        let depositCount = 0;
+        let depositSum = 0;
+        let refundCount = 0;
+        let receiptCount = 0;
+
+        filteredPayments.forEach(p => {
+          const amt = Number(p.amount) || 0;
+          if (p.type === 'refund' || amt < 0) {
+            daHoanTien += Math.abs(amt);
+            refundCount++;
+          } else {
+            totalThu += amt;
+            receiptCount++;
+            if (p.type === 'deposit') {
+              depositCount++;
+              depositSum += amt;
+            }
+          }
+        });
+        const thucThu = totalThu - daHoanTien;
+        return { totalThu, daHoanTien, thucThu, receiptCount, refundCount, depositSum };
+      }, [filteredPayments]);
 
       const totalPages = Math.ceil(filteredPayments.length / pageSize) || 1;
       const paginatedList = filteredPayments.slice((currentPage - 1) * pageSize, currentPage * pageSize);
@@ -2098,7 +2183,7 @@ const { useState, useEffect, useMemo, useRef } = React;
               </span>
               <div className="mt-3">
                 <div className="text-2xl sm:text-3xl font-black text-slate-900">{formatVND(totals.totalThu)}</div>
-                <div className="text-xs text-slate-400 mt-1">89 phiếu thu · cọc 141 tr</div>
+                <div className="text-xs text-slate-400 mt-1">{totals.receiptCount} phiếu thu · cọc {formatVND(totals.depositSum)}</div>
               </div>
             </div>
 
@@ -2108,7 +2193,7 @@ const { useState, useEffect, useMemo, useRef } = React;
               </span>
               <div className="mt-3">
                 <div className="text-2xl sm:text-3xl font-black text-slate-900">{formatVND(totals.daHoanTien)}</div>
-                <div className="text-xs text-slate-400 mt-1">1 phiếu hoàn</div>
+                <div className="text-xs text-slate-400 mt-1">{totals.refundCount} phiếu hoàn</div>
               </div>
             </div>
 
@@ -2118,7 +2203,7 @@ const { useState, useEffect, useMemo, useRef } = React;
               </span>
               <div className="mt-3">
                 <div className="text-2xl sm:text-3xl font-black">{formatVND(totals.thucThu)}</div>
-                <div className="text-xs text-teal-100 mt-1">Nhiều nhất: OTA thu hộ 103 tr</div>
+                <div className="text-xs text-teal-100 mt-1">{filteredPayments.length} giao dịch thanh toán</div>
               </div>
             </div>
           </div>
